@@ -1,0 +1,12 @@
+# Môi trường ảo Python
+env/
+*.pyc
+__pycache__/
+
+# Hệ thống và IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Thông tin nhạy cảm
+backend/config/db_config.py
