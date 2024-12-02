@@ -1,0 +1,14 @@
+{
+  "name": "iot_unlock_backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "mysql2": "^3.11.5",
+    "ws": "^8.4.2"
+  }
+}
