@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { addFingerprint } from "../services/fingerprint";
+import './Fingerprint.css';
+
 
 function Fingerprint() {
   const [userId, setUserId] = useState("");

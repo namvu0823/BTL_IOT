@@ -1,0 +1,36 @@
+.sidebar {
+    width: 200px;
+    background-color: #1f1f1f;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar button {
+    background-color: #282828;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+    display: flex; /* Để icon và text căn ngang */
+    align-items: center; /* Icon và text ở giữa */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sidebar button:hover {
+    background-color: #03a9f4;
+    color: #ffffff;
+    transform: translateX(5px);
+}
+
+.sidebar button:active {
+    background-color: #0288d1;
+}
+
+.sidebar button svg {
+    font-size: 1.2rem; /* Kích thước icon */
+}
