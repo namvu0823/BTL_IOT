@@ -1,7 +1,8 @@
 const express = require('express');
-const { addFingerprint } = require('../controllers/fingerprintController');
+const { addFingerprint, getAllUserFingerprint } = require('../controllers/fingerprintController');
 const router = express.Router();
 
-router.post('/', addFingerprint);
+router.get('/fingerprint',getAllUserFingerprint)
+router.post('/addFingerprint', addFingerprint);
 
 module.exports = router;
