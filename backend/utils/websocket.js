@@ -11,45 +11,39 @@ module.exports = (wss) => {
 
     ws.on('message', async (message) => {
       try {
-        const data = JSON.parse(message);
-        console.log('Received:', data);
-
-        switch (data.type) {
-          case 'fingerprint':
-            // Lưu dữ liệu vân tay vào MongoDB
-            const newFingerprint = new Fingerprint({
-              userId: data.userId,
-              fingerprintData: data.fingerprintData,
-            });
-            await newFingerprint.save();
-            ws.send(JSON.stringify({ message: 'Fingerprint data saved' }));
-            console.log('Fingerprint data saved');
-            break;
-
-          case 'rfid':
-            // Lưu dữ liệu RFID vào MongoDB
-            const newRFID = new RFID({
-              userId: data.userId,
-              cardUID: data.cardUID,
-            });
-            await newRFID.save();
-            ws.send(JSON.stringify({ message: 'RFID data saved' }));
-            console.log('RFID data saved');
-            break;
-
-          case 'test':
-            console.log('Test message from ESP32:', data.message);
-            ws.send(JSON.stringify({ message: 'Test received successfully' }));
-            break;
-
-          default:
-            console.log('Unknown data type:', data.type);
-            ws.send(JSON.stringify({ error: 'Unknown data type' }));
-            break;
+        const parsedMessage = JSON.parse(message);
+        const { header, UID, status, time, finger_id } = parsedMessage;
+  
+        if (header === "Check_in request") {
+          console.log(`Client check-in with UID: ${UID}`);
+          // Sửa ở đây
+          //Lấy thông tin đăng nhập(password, vân tay), gửi cho esp32
+          //thay dữ liệu trong Json dưới đây bằng dữ liệu thật
+          ws.send(JSON.stringify({ header: "Check_in response", UID, password: "password123", finger_id:"6" }));
+        } 
+  
+        else if (header === "response new account") {
+          if(status ==="successfully"){
+              console.log(`New account creation for UID: ${UID} - Status: ${status} - Finger_id: ${finger_id}`);
+              //xử lý tiếp theo
+              //lưu vào mongodb
+          }
+          else if (status ==="failed"){
+              console.log(`Failed to create new account for UID: ${UID} - Status: ${status}`);
+              //xử lý tiếp theo
+              //thông báo lên client
+          }
+        } 
+  
+        else if (header === "Check_in successfully")
+        {
+          console.log(`Check_in successfully :${UID}- Time: ${time}`);
+          //xử lý tiếp theo
+          //lưu vào mongodb
         }
+      
       } catch (err) {
-        console.error('Invalid JSON received:', message);
-        ws.send(JSON.stringify({ error: 'Invalid JSON format' }));
+        console.error("Error parsing JSON:", err);
       }
     });
 
