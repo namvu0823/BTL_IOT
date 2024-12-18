@@ -330,7 +330,11 @@ String time(){
 }
 void setup() {
 
-  Serial.begin(115200);                            
+  Serial.begin(115200);
+  if (init_wifi() != ESP_OK){
+    Serial.println("Lỗi kết nối Wifi/WebSocket");
+    return;
+  }                             
   mySerial.begin(57600, SERIAL_8N1, AS_TXD, AS_RXD);      
   delay(100);
   finger.begin(57600);
@@ -341,12 +345,7 @@ void setup() {
   } else {
     Serial.println("Không thể kết nối cảm biến vân tay");
     while (1);
-  }
-
-  if (init_wifi() != ESP_OK){
-    Serial.println("Lỗi kết nối Wifi/WebSocket");
-    return;
-  }   
+  }  
   SPI.begin();                  
   rfid.PCD_Init();              
 }
