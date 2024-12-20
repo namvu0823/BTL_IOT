@@ -1,3 +1,4 @@
+
 const Device = require('../models/Device'); 
 
 export const createDevice = async (req, res) => {

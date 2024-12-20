@@ -1,5 +1,6 @@
-const History = require('../models/History'); // Import model History
-const User = require('../models/User'); // Import model User (nếu cần kiểm tra UID và Finger)
+
+const History = require('../models/History'); 
+const User = require('../models/User'); 
 
 export const saveDoorHistory = async (req, res) => {
   try {
@@ -103,3 +104,21 @@ export const getAllHistory = async (req, res) => {
       });
     }
   };
+
+
+// Lấy lịch sử theo `id_port`
+export const getHistoryByPort = async (req, res) => {
+  try {
+    const { id_port } = req.params;
+    const histories = await History.find({ id_port }).sort({ time_in: -1 });
+    if (!histories || histories.length === 0) {
+      return res.status(404).json({ message: 'No history found for this port' });
+    }
+    res.json(histories);
+  } catch (err) {
+    console.error('Error fetching histories:', err.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
