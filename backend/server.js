@@ -1,8 +1,7 @@
 const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
-const fingerprintRoutes = require('./routes/fingerprint');
-const rfidRoutes = require('./routes/rfid');
+const historyRoutes = require('./routes/historyRoutes'); 
 
 const app = express();
 const cors = require('cors');
@@ -12,8 +11,8 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
 app.use(express.json());
-app.use('/api/fingerprint', fingerprintRoutes);
-app.use('/api/rfid', rfidRoutes);
+
+app.use('/api', historyRoutes);
 
 require('./utils/websocket')(wss); // WebSocket xử lý giao tiếp với ESP32
 
