@@ -1,21 +1,35 @@
 const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
-const fingerprintRoutes = require('./routes/fingerprint');
-const rfidRoutes = require('./routes/rfid');
+const cors = require('cors');
+const connectDB = require('./utils/db');
+
+// Routes
+const userRoutes = require('./routes/user');
+const deviceRoutes = require('./routes/device');
+const historyRoutes = require('./routes/history');
+
+require('dotenv').config();
 
 const app = express();
-const cors = require('cors');
-app.use(cors());
-
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
+// Kết nối MongoDB
+connectDB();
+
+// Middleware
+app.use(cors());
 app.use(express.json());
-app.use('/api/fingerprint', fingerprintRoutes);
-app.use('/api/rfid', rfidRoutes);
 
-require('./utils/websocket')(wss); // WebSocket xử lý giao tiếp với ESP32
+// Routes
+app.use('/api/users', userRoutes);
+app.use('/api/devices', deviceRoutes);
+app.use('/api/history', historyRoutes);
 
-const PORT = 3000;
+// WebSocket setup
+require('./utils/websocket')(wss);
+
+// Server listener
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
