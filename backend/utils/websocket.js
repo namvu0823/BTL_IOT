@@ -4,7 +4,7 @@ const RFID = require('../models/RFID');
 
 module.exports = (wss) => {
   // Kết nối MongoD
-  //connectDB();
+  connectDB();
 
   wss.on('connection', (ws) => {
     console.log('ESP32 connected');
