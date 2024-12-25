@@ -1,22 +1,41 @@
 import React from "react";
-import { FaFingerprint, FaIdCard, FaTable } from "react-icons/fa"; // Import icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import {Link, NavLink} from 'react-router-dom'
 import "./Sidebar.css";
 
-function Sidebar({ setActiveComponent }) {
+library.add(fas);
+
+
+function Sidebar() {
   return (
     <div className="sidebar">
-      <button onClick={() => setActiveComponent("Fingerprint")}>
-        <FaFingerprint style={{ marginRight: "10px" }} />
-        Fingerprint
-      </button>
-      <button onClick={() => setActiveComponent("RFID")}>
-        <FaIdCard style={{ marginRight: "10px" }} />
-        RFID
-      </button>
-      <button onClick={() => setActiveComponent("AccessManagement")}>
-        <FaTable style={{ marginRight: "10px" }} />
-        Access Management
-      </button>
+      <NavLink className={({ isActive }) => (isActive ? "menu-item active" : "menu-item")} to='/access-management'>
+        <FontAwesomeIcon icon="fa-solid fa-location-dot" />
+        <div className="sidebar-title">Quản lý truy nhập</div>
+      </NavLink>
+
+      <NavLink className={({ isActive }) => (isActive ? "menu-item active" : "menu-item")} to='/user-list'>
+        <FontAwesomeIcon icon="fa-solid fa-people-roof" />
+        <div className="sidebar-title">Danh sách người dùng</div>
+      </NavLink>
+
+      <NavLink className={({ isActive }) => (isActive ? "menu-item active" : "menu-item")} to='/device-management'>
+        <FontAwesomeIcon icon="fa-solid fa-list-check" />
+        <div className="sidebar-title">Danh sách thiết bị</div>
+      </NavLink>
+
+      <NavLink className={({ isActive }) => (isActive ? "menu-item active" : "menu-item")} to='/lyyy'>
+        <FontAwesomeIcon icon="fa-solid fa-bars-progress" />
+        <div className="sidebar-title">Quản lý người dùng</div>
+      </NavLink>
+
+      <NavLink className={({ isActive }) => (isActive ? "menu-item active" : "menu-item")} to='/logout'>
+        <FontAwesomeIcon icon="fa-solid fa-right-from-bracket" />
+        <div className="sidebar-title">Đăng xuất</div>
+      </NavLink>
+
     </div>
   );
 }

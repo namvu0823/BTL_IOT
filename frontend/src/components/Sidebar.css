@@ -1,16 +1,17 @@
 .sidebar {
-    width: 200px;
-    background-color: #1f1f1f;
-    padding: 20px;
+    width: 250px;
+    height: 100vh;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     gap: 15px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 0 5px rgba(214, 204, 204, 0.5);
+    padding-top: 30px;
 }
 
-.sidebar button {
-    background-color: #282828;
-    color: #ffffff;
+.sidebar .menu-item {
+    text-decoration: none;    
+    color: #333;
     border: none;
     border-radius: 5px;
     padding: 10px;
@@ -21,16 +22,22 @@
     transition: all 0.3s ease;
 }
 
-.sidebar button:hover {
-    background-color: #03a9f4;
-    color: #ffffff;
+.sidebar-title {
+    padding-left: 10px;
+}
+
+.sidebar .menu-item:hover {
+    background-color: #2fa44b;
+    color: #ffffff ;
     transform: translateX(5px);
 }
 
-.sidebar button:active {
-    background-color: #0288d1;
+.sidebar .menu-item.active {
+    background-color: #2fa44b;
+    color: #fff;
 }
 
-.sidebar button svg {
+.sidebar .menu-item svg {
     font-size: 1.2rem; /* Kích thước icon */
+    width: 20px;
 }
