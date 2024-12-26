@@ -2,56 +2,70 @@
 const History = require('../models/History'); 
 const User = require('../models/User'); 
 
-export const saveDoorHistory = async (req, res) => {
-  try {
-    const { id_port, UID, finger, time_in, time_out, status } = req.body;
 
-    // Kiểm tra xem UID có tồn tại trong User collection không
-    const userExists = await User.findOne({ UID });
-    if (!userExists) {
-      return res.status(404).json({
+// Hàm saveHistory để lưu lịch sử
+exports.saveHistory = async (req, res) => {
+  try {
+    const { header, UID, time, method } = req.body;
+
+    // Kiểm tra xem tất cả các trường có trong request không
+    if (!header || !UID || !time || !method) {
+      return res.status(400).json({
         success: false,
-        message: 'User not found for the provided UID',
+        message: 'Missing required fields: header, UID, time, or method.',
       });
     }
 
-    // Kiểm tra xem vân tay (finger) có hợp lệ không
-    const fingerExists = await User.findOne({ UID: finger });
-    if (!fingerExists) {
+    // Chuyển thời gian thành đối tượng Date
+    const time_in = new Date(time);
+
+    // Xác định trạng thái (status) dựa trên header
+    const status = header.includes('success') ? true : false;
+
+    // Xác định access_type từ phương thức (method)
+    const access_type = method === 'fingerprint' ? 'Fingerprint' : 'RFID';
+
+    // Tìm user dựa trên UID (lấy ObjectId từ UID)
+    const user = await User.findOne({ UID });
+
+    if (!user) {
       return res.status(404).json({
         success: false,
-        message: 'Invalid finger information',
+        message: 'User not found with this UID.',
       });
     }
 
     // Tạo bản ghi lịch sử mới
-    const newHistory = new History({
-      id_port,
-      UID,
-      finger,
+    const history = new History({
+      id_port: 'Port-001', 
+      UID: user._id, 
+      finger: user.finger || null, 
+      access_type,
       time_in,
-      time_out,
       status,
     });
 
-    // Lưu bản ghi lịch sử vào cơ sở dữ liệu
-    const savedHistory = await newHistory.save();
+   
+    await history.save();
 
     res.status(201).json({
       success: true,
-      message: 'Door access history saved successfully',
-      data: savedHistory,
+      message: 'History record saved successfully',
+      data: history,
     });
+
   } catch (error) {
+    
     res.status(500).json({
       success: false,
-      message: 'Error saving door access history',
+      message: 'Error saving history record',
       error: error.message,
     });
   }
 };
 
-export const getAllHistory = async (req, res) => {
+
+exports.getAllHistory = async (req, res) => {
     try {
       // Lấy tất cả bản ghi lịch sử và điền thông tin người dùng (UID)
       const histories = await History.find().populate('UID').populate('finger'); 
@@ -77,7 +91,7 @@ export const getAllHistory = async (req, res) => {
     }
   };
 
-  export const getHistoryById = async (req, res) => {
+exports.getHistoryById = async (req, res) => {
     try {
       const { id } = req.params; 
   
@@ -107,7 +121,7 @@ export const getAllHistory = async (req, res) => {
 
 
 // Lấy lịch sử theo `id_port`
-export const getHistoryByPort = async (req, res) => {
+exports.getHistoryByPort = async (req, res) => {
   try {
     const { id_port } = req.params;
     const histories = await History.find({ id_port }).sort({ time_in: -1 });
