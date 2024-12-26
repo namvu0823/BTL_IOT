@@ -8,7 +8,6 @@ exports.saveHistory = async (req, res) => {
   try {
     const { header, UID, time, method } = req.body;
 
-    // Kiểm tra xem tất cả các trường có trong request không
     if (!header || !UID || !time || !method) {
       return res.status(400).json({
         success: false,

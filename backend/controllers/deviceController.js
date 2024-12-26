@@ -1,7 +1,7 @@
 
 const Device = require('../models/Device'); 
 
-export const createDevice = async (req, res) => {
+exports.createDevice = async (req, res) => {
     try {
       const { id_port, location } = req.body;
   
@@ -25,7 +25,7 @@ export const createDevice = async (req, res) => {
   };
   
   // lấy các thiết bị
-  export const getAllDevices = async (req, res) => {
+  exports.getAllDevices = async (req, res) => {
     try {
       // Lấy tất cả thiết bị
       const devices = await Device.find();
@@ -45,7 +45,7 @@ export const createDevice = async (req, res) => {
   };
   
 // lấy thiết bị bởi id
-export const getDeviceByIdPort = async (req, res) => {
+exports.getDeviceByPort = async (req, res) => {
     try {
       const { id_port } = req.params;
   
@@ -75,7 +75,7 @@ export const getDeviceByIdPort = async (req, res) => {
   
 
 // Cập nhật thiết bị
-export const updateDevice = async (req, res) => {
+exports.updateDevice = async (req, res) => {
     try {
       const { id_port } = req.params;
       const updateFields = req.body;
@@ -109,7 +109,7 @@ export const updateDevice = async (req, res) => {
   };
   
 // Delete a device
-export const deleteDevice = async (req, res) => {
+exports.deleteDevice = async (req, res) => {
     try {
       const { id_port } = req.params;
   
