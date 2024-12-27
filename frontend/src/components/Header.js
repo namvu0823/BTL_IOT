@@ -15,7 +15,7 @@ const Header = () => {
             <div className='logo-header-title'>Acheckin</div>
         </div>
         <div className='user'>
-            <div className='user-name'>Admin</div>
+            <div className='user-name'>Khánh Ly</div>
             <FontAwesomeIcon icon="fa-solid fa-user" />
         </div>
     </div>

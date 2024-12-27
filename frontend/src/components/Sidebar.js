@@ -32,7 +32,7 @@ function Sidebar({ onLogout }) {
         <div className="sidebar-title">Danh sách thiết bị</div>
       </NavLink>
 
-      <NavLink className={({ isActive }) => (isActive ? "menu-item active" : "menu-item")} to='/lyyy'>
+      <NavLink className={({ isActive }) => (isActive ? "menu-item active" : "menu-item")} to='/user-management'>
         <FontAwesomeIcon icon="fa-solid fa-bars-progress" />
         <div className="sidebar-title">Quản lý người dùng</div>
       </NavLink>

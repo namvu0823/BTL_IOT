@@ -58,7 +58,7 @@ function UserManagement() {
                                 <td>{user.fingerprint}</td>
                                 <td>{user.dateUpdated}</td>
                                 <td>
-                                    <button onClick={() => handleDeleteUser(user.id)}>Xóa</button>
+                                    <button className="delete-button" onClick={() => handleDeleteUser(user.id)}>Xóa</button>
                                 </td>
                             </tr>
                         ))}

@@ -1,9 +1,13 @@
 /* UserManagement.css */
 .container {
     overflow-y: hidden;
+    width: 100%;
+    padding: 20px;
+
 }
 
 .container table {
+    border: 1px solid #ddd;
     width: 100%;
     border-collapse: collapse; /* Gộp các border */
 }
@@ -12,6 +16,8 @@
     overflow-y: auto; /* Cho phép cuộn dọc */
     max-height: 300px; /* Chiều cao tối đa cho bảng */
     margin-top: 10px; /* Khoảng cách trên */
+    border-radius: 10px;
+
 }
 
 .container th, .app-container td {
@@ -21,7 +27,7 @@
 }
 
 .container th {
-    background-color: #007bff; /* Màu nền cho tiêu đề */
+    background-color: #03a9f4; /* Màu nền cho tiêu đề */
     color: white; /* Màu chữ cho tiêu đề */
 }
 
@@ -44,6 +50,7 @@
     transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền */
     font-size: 14px; /* Kích thước chữ */
     height: 40px; /* Chiều cao nút */
+    font-weight: 600;
     width: 80px; /* Chiều rộng nút */
 }
 
@@ -52,12 +59,13 @@
 }
 
 .container h2, .app-container h3 {
-    text-align: center; /* Căn giữa */
-    color: #03a9f4; /* Màu chữ */
+    text-align: left;
+    color: #333; /* Màu chữ */
 }
 
 .container h2 {
     font-size: 1.5rem; /* Kích thước chữ cho h2 */
+
 }
 
 .container h3 {
@@ -113,7 +121,6 @@
 /* Modal styles */
 .modal {
     display: flex; /* Sử dụng flexbox */
-    justify-content: center; /* Căn giữa theo chiều ngang */
     align-items: center; /* Căn giữa theo chiều dọc */
     position: fixed; /* Vị trí cố định */
     z-index: 1000; /* Đặt trên cùng */
@@ -159,6 +166,7 @@
     border: none; /* Không viền */
     border-radius: 4px; /* Bo góc */
     cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột */
+    font-weight: 600;
     transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền */
     font-size: 16px; /* Kích thước chữ cho nút */
 }
@@ -179,4 +187,13 @@
     color: black; /* Màu chữ khi hover */
     text-decoration: none; /* Không gạch chân */
     cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột */
+}
+
+.delete-button {
+    padding: 10px;
+    background-color: #dc3545;
+    color: #fff;
+    border: 1px solid #c82333;
+    border-radius: 5px;
+    font-weight: 600;
 }
