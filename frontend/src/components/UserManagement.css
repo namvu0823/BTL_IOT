@@ -1,0 +1,182 @@
+/* UserManagement.css */
+.container {
+    overflow-y: hidden;
+}
+
+.container table {
+    width: 100%;
+    border-collapse: collapse; /* Gộp các border */
+}
+
+.table-container {
+    overflow-y: auto; /* Cho phép cuộn dọc */
+    max-height: 300px; /* Chiều cao tối đa cho bảng */
+    margin-top: 10px; /* Khoảng cách trên */
+}
+
+.container th, .app-container td {
+    padding: 10px; /* Padding cho các ô */
+    text-align: left; /* Căn trái cho văn bản */
+    border-bottom: 1px solid #ddd; /* Đường viền dưới */
+}
+
+.container th {
+    background-color: #007bff; /* Màu nền cho tiêu đề */
+    color: white; /* Màu chữ cho tiêu đề */
+}
+
+.container tr:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Hiệu ứng hover */
+}
+
+.button-container {
+    margin: 10px 0; /* Khoảng cách trên và dưới */
+    text-align: center; /* Căn giữa */
+}
+
+.button-container button {
+    background-color: #03a9f4; /* Màu nền cho nút */
+    color: white; /* Màu chữ */
+    border: none; /* Không viền */
+    padding: 5px 10px; /* Padding cho nút */
+    border-radius: 4px; /* Bo góc */
+    cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền */
+    font-size: 14px; /* Kích thước chữ */
+    height: 40px; /* Chiều cao nút */
+    width: 80px; /* Chiều rộng nút */
+}
+
+.button-container button:hover {
+    background-color: #0056b3; /* Màu nền khi hover */
+}
+
+.container h2, .app-container h3 {
+    text-align: center; /* Căn giữa */
+    color: #03a9f4; /* Màu chữ */
+}
+
+.container h2 {
+    font-size: 1.5rem; /* Kích thước chữ cho h2 */
+}
+
+.container h3 {
+    font-size: 1.3rem; /* Kích thước chữ cho h3 */
+    margin-top: 0; /* Không có khoảng cách trên */
+}
+
+.container ul {
+    max-height: 300px; /* Giới hạn chiều cao */
+    overflow-y: hidden; /* Ẩn thanh cuộn dọc */
+    padding: 0; /* Không có padding */
+    list-style-type: none; /* Không có kiểu danh sách */
+    border: 1px solid #ddd; /* Viền cho danh sách */
+    border-radius: 4px; /* Bo góc */
+}
+
+.container li {
+    display: flex; /* Sử dụng flexbox cho li */
+    justify-content: space-between; /* Căn đều hai bên */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    padding: 10px; /* Padding cho li */
+    border-bottom: 1px solid #ddd; /* Đường viền dưới cho li */
+    color: black; /* Màu chữ cho li */
+    background-color: rgba(255, 255, 255, 0.8); /* Màu nền cho li */
+}
+
+.user-name {
+    flex-grow: 1; /* Giãn nở để chiếm không gian */
+    margin-right: 10px; /* Khoảng cách bên phải */
+    letter-spacing: 1px; /* Khoảng cách giữa các chữ cái */
+}
+
+.container li button {
+    background-color: #dc3545; /* Màu nền cho nút trong li */
+    color: white; /* Màu chữ cho nút trong li */
+    border: none; /* Không viền */
+    padding: 5px 10px; /* Padding cho nút */
+    border-radius: 4px; /* Bo góc */
+    cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền */
+    height: 30px; /* Chiều cao nút */
+}
+
+.container li button:hover {
+    background-color: #c82333; /* Màu nền khi hover */
+}
+
+.container p {
+    text-align: center; /* Căn giữa cho đoạn văn */
+    color: #777; /* Màu chữ cho đoạn văn */
+}
+
+/* Modal styles */
+.modal {
+    display: flex; /* Sử dụng flexbox */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    position: fixed; /* Vị trí cố định */
+    z-index: 1000; /* Đặt trên cùng */
+    left: 0;
+    top: 0;
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    height: 100%; /* Chiếm toàn bộ chiều cao */
+    background-color: rgba(0, 0, 0, 0.5); /* Nền mờ đen */
+}
+
+.modal-content {
+    background-color: #fefefe; /* Màu nền cho nội dung modal */
+    margin: 15% auto; /* Lề trên và dưới */
+    padding: 20px; /* Padding cho nội dung */
+    border: 1px solid #888; /* Viền cho modal */
+    border-radius: 8px; /* Bo góc */
+    width: 300px; /* Chiều rộng modal */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng */
+}
+
+.modal-title {
+    margin: 0 0 15px; /* Khoảng cách cho tiêu đề */
+    font-size: 20px; /* Kích thước chữ cho tiêu đề */
+    text-align: center; /* Căn giữa tiêu đề */
+    color: #333; /* Màu chữ cho tiêu đề */
+}
+
+.modal-input {
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    padding: 10px; /* Padding cho input */
+    margin: 10px 0; /* Khoảng cách trên và dưới */
+    border: 1px solid #ccc; /* Viền cho input */
+    border-radius: 4px; /* Bo góc */
+    box-sizing: border-box; /* Tính toán kích thước */
+    font-size: 16px; /* Kích thước chữ cho input */
+}
+
+.modal-button {
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    padding: 10px; /* Padding cho nút */
+    background-color: #007bff; /* Màu nền cho nút */
+    color: white; /* Màu chữ cho nút */
+    border: none; /* Không viền */
+    border-radius: 4px; /* Bo góc */
+    cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền */
+    font-size: 16px; /* Kích thước chữ cho nút */
+}
+
+.modal-button:hover {
+    background-color: #0056b3; /* Màu nền khi hover */
+}
+
+.close {
+    color: #aaa; /* Màu chữ cho nút đóng */
+    float: right; /* Căn phải */
+    font-size: 28px; /* Kích thước chữ cho nút đóng */
+    font-weight: bold; /* Chữ đậm */
+}
+
+.close:hover,
+.close:focus {
+    color: black; /* Màu chữ khi hover */
+    text-decoration: none; /* Không gạch chân */
+    cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột */
+}

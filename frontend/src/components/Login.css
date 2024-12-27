@@ -1,0 +1,74 @@
+.login-app-container {
+    position: fixed; /* Đặt vị trí cố định để nó phủ lên toàn bộ màn hình */
+    top: 0; /* Bắt đầu từ trên cùng */
+    left: 0; /* Bắt đầu từ bên trái */
+    width: 100%; /* Chiều rộng 100% */
+    height: 100%; /* Chiều cao 100% */
+    color: #ffffff; /* Màu chữ */
+    display: flex; /* Sử dụng flexbox */
+    z-index: 1000; /* Đảm bảo nó nằm trên các phần tử khác */
+    background-image: url('C:/Users/LE NHAT DUC/BTL_IOT/frontend/src/resource/background_4.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Vùng màu trong suốt cho đăng nhập */
+.login-app-container .login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Căn giữa theo chiều ngang */
+    justify-content: center;  /* Căn giữa theo chiều dọc */
+    padding: 20px; /* Thêm padding để tạo khoảng cách */
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước */
+    background-color: rgba(255, 255, 255, 0.8); /* Màu nền trắng trong suốt */
+    width: 100%; /* Chiếm toàn bộ chiều rộng có thể */
+    max-width: 400px; /* Chiều rộng tối đa cho vùng đăng nhập */
+    border-radius: 10px; /* Thêm bo góc cho vùng đăng nhập */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Thêm bóng đổ nhẹ */
+    position: absolute; /* Đặt vị trí tuyệt đối để che phủ */
+    top: 50%; /* Căn giữa theo chiều dọc */
+    left: 50%; /* Căn giữa theo chiều ngang */
+    transform: translate(-50%, -50%); /* Dịch chuyển để căn giữa hoàn toàn */
+    z-index: 2; /* Đảm bảo đăng nhập nằm trên hình nền */
+}
+
+h2 {
+    margin-bottom: 20px;  /* Khoảng cách giữa tiêu đề và các phần tử khác */
+    font-size: 32px;  /* Kích thước chữ tiêu đề */
+    color: rgba(26, 26, 26, 0.8);  /* Màu chữ tiêu đề với độ trong suốt */
+    text-align: center; /* Căn giữa tiêu đề */
+    transition: opacity 0.3s; /* Hiệu ứng chuyển đổi cho độ trong suốt */
+}
+
+.login-container:hover h2 {
+    opacity: 1; /* Độ trong suốt khi hover */
+}
+
+input {
+    margin: 10px 0;  /* Khoảng cách giữa các ô nhập */
+    padding: 15px;
+    width: 100%;  /* Chiếm toàn bộ chiều rộng của container */
+    max-width: 300px;  /* Độ rộng tối đa ô nhập */
+    border: 1px solid #ccc;  /* Viền nhẹ màu xám */
+    border-radius: 5px;  /* Bo góc cho ô nhập */
+    font-size: 16px;  /* Kích thước chữ ô nhập */
+    background-color: white;  /* Màu nền ô nhập */
+    color: #333333;  /* Màu chữ ô nhập */
+}
+
+.login_button {
+    padding: 10px 20px;  /* Padding cho nút */
+    background-color: #2fa44b;  /* Màu nền nút (xanh dương) */
+    color: white;  /* Màu chữ nút */
+    border: none;  /* Không viền */
+    border-radius: 5px;  /* Bo góc cho nút */
+    cursor: pointer;
+    font-size: 16px;  /* Kích thước chữ nút */
+    transition: background-color 0.3s;  /* Hiệu ứng chuyển màu */
+    margin-top: 10px;  /* Khoảng cách phía trên nút */
+}
+
+.login_button:hover {
+    background-color: #2fa44b;  /* Màu nền khi hover (xanh dương đậm) */
+}

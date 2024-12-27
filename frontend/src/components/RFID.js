@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { addRFID, getRFIDByUserId } from "../services/rfid";
 import { FaUser, FaIdCard, FaPlus, FaSearch } from "react-icons/fa"; // Import icons
+import './RFID.css'
 
 function RFID() {
   const [userId, setUserId] = useState("");
@@ -30,7 +31,7 @@ function RFID() {
 
   return (
     <div>
-      <h2>Manage RFID Cards</h2>
+      <h2 className="rfid-title">Manage RFID Cards</h2>
       <form onSubmit={handleAdd} className="rfid-form">
         <div className="input-group">
           <FaUser className="icon" />

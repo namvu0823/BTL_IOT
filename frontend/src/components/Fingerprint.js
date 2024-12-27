@@ -19,7 +19,7 @@ function Fingerprint() {
 
   return (
     <div>
-      <h2>Manage Fingerprints</h2>
+      <h2 className="fingerprint-title">Manage Fingerprints</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
