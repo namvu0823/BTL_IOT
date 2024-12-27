@@ -1,0 +1,21 @@
+.header {
+    background-color: #2fa44b;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    font-size: 22px;
+    padding: 5px 20px;
+}
+
+.logo-header {
+    display: flex;
+    gap: 10px
+
+}
+.header .user {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}

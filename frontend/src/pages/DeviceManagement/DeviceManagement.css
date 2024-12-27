@@ -1,0 +1,54 @@
+.device-management {
+    width: 100%;
+    margin: 20px;
+}
+
+.device-content {
+    display: flex;
+    flex-direction: row;
+}
+.table-device {
+    width: 20%;
+}
+.device-chart {
+    width: 80%;
+    padding-left: 20px;
+    height: 400px;
+}
+.device-management-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333; 
+    margin-bottom: 10px;
+
+}
+
+
+.table-device table{
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.table-device thead tr td {
+    padding: 10px;
+    color: #fff;
+    background-color:#03a9f4;
+    font-size: 16px;
+    font-weight: bolder;
+    border-bottom: 2px solid #ddd;
+    border-radius: 5px;
+}
+
+.table-device tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.table-device tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table-device tbody td {
+    padding: 10px;
+    font-size: 14px;
+}

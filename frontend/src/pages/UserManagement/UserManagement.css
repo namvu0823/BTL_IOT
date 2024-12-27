@@ -1,0 +1,40 @@
+.user-management {
+    width: 100%;
+    margin: 20px;
+}
+
+.user-management-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.table-user {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.table-user thead tr td {
+    padding: 10px;
+    background-color: #03a9f4;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bolder;
+    border-bottom: 2px solid #ddd;
+    border-radius: 5px;
+}
+
+.table-user tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.table-user tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table-user tbody td {
+    padding: 10px;
+    font-size: 14px;    
+}

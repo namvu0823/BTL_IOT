@@ -1,0 +1,113 @@
+.access-management {
+    margin: 20px;
+    width: 100%;
+    justify-content: center;
+    background-color: #fff;
+    /* padding: 20px; */
+    /* border: 1px solid #333; */
+}
+
+.access-management-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.table-access {
+    width: 100%;    
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+
+.table-access thead td {
+    color: #fff;
+    background-color: #03a9f4;
+    font-weight: bolder;
+    text-align: left;
+    font-size: 16px;
+    padding: 10px;
+    border-bottom: 2px solid #ddd;
+    border-radius: 5px;
+}
+
+
+.table-access tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.table-access tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table-access td {
+    padding: 0px;
+    font-size: 14px;
+    color: #333;
+}
+
+.table-access tr:hover {
+    background-color: #eef2f6 !important;
+}
+
+.table-access .time-access {
+    color: rgb(5, 150, 5);
+}
+.pagination {
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+    gap: 5px;
+}
+
+.pagination .page-button {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination .page-button.active {
+    background-color: #03a9f4;
+    color: #555;
+    font-weight: bold;
+}
+.page-button:hover:not([disabled]) {
+    background-color: #03a9f4;
+    color: white;
+}
+
+.page-button[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    padding: 2px 10px;
+    gap: 5px;
+    justify-content: center;
+    margin-bottom:10px;
+    color: #333;
+}
+
+.search-input {
+    background-color: #fff;
+    border-radius: 10px;
+    height: 25px;
+    width: 30%;
+}
+
+.table-access img {
+    width: 40px;
+    height: 40px;
+    /* overflow: hidden; */
+    object-fit: cover;
+    border-radius: 999px;
+}

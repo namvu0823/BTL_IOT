@@ -1,40 +1,40 @@
 import React from "react";
-import { FaFingerprint, FaIdCard, FaTable, FaSignOutAlt, FaUsers } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import {Link, NavLink} from 'react-router-dom'
 import "./Sidebar.css";
 
-function Sidebar({ setActiveComponent, handleLogout }) {
-  const navigate = useNavigate();
+library.add(fas);
 
-  const handleLogoutClick = () => {
-    handleLogout(); // Gọi hàm handleLogout từ App
-    navigate("/login"); // Chuyển hướng về trang đăng nhập
-  };
 
+function Sidebar() {
   return (
     <div className="sidebar">
-      <div className="sidebar-buttons">
-        <button onClick={() => setActiveComponent("Fingerprint")} className="sidebar-button">
-          <FaFingerprint />
-          Fingerprint
-        </button>
-        <button onClick={() => setActiveComponent("RFID")} className="sidebar-button">
-          <FaIdCard />
-          RFID
-        </button>
-        <button onClick={() => setActiveComponent("AccessManagement")} className="sidebar-button">
-          <FaTable />
-          Access Management
-        </button>
-        <button onClick={() => setActiveComponent("UserManagement")} className="sidebar-button"> {/* Thêm nút User Management */}
-          <FaUsers />
-          User Management
-        </button>
-      </div>
-      <button onClick={handleLogoutClick} className="logout-button">
-        <FaSignOutAlt />
-        Logout
-      </button>
+      <NavLink className={({ isActive }) => (isActive ? "menu-item active" : "menu-item")} to='/access-management'>
+        <FontAwesomeIcon icon="fa-solid fa-location-dot" />
+        <div className="sidebar-title">Quản lý truy nhập</div>
+      </NavLink>
+
+      <NavLink className={({ isActive }) => (isActive ? "menu-item active" : "menu-item")} to='/user-list'>
+        <FontAwesomeIcon icon="fa-solid fa-people-roof" />
+        <div className="sidebar-title">Danh sách người dùng</div>
+      </NavLink>
+
+      <NavLink className={({ isActive }) => (isActive ? "menu-item active" : "menu-item")} to='/device-management'>
+        <FontAwesomeIcon icon="fa-solid fa-list-check" />
+        <div className="sidebar-title">Danh sách thiết bị</div>
+      </NavLink>
+
+      <NavLink className={({ isActive }) => (isActive ? "menu-item active" : "menu-item")} to='/lyyy'>
+        <FontAwesomeIcon icon="fa-solid fa-bars-progress" />
+        <div className="sidebar-title">Quản lý người dùng</div>
+      </NavLink>
+
+      <NavLink className={({ isActive }) => (isActive ? "menu-item active" : "menu-item")} to='/logout'>
+        <FontAwesomeIcon icon="fa-solid fa-right-from-bracket" />
+        <div className="sidebar-title">Đăng xuất</div>
+      </NavLink>
     </div>
   );
 }
