@@ -171,9 +171,6 @@ const AccessManagement = () => {
             device: "Main Gate",
             action: "Chi tiết",
           },
-          
-          
-
     ];
 
 
@@ -181,7 +178,7 @@ const AccessManagement = () => {
     const [accessLogs, setAccessLogs] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 4;
+    const itemsPerPage = 3;
     
     useEffect(()=>{
         setAccessLogs(access);

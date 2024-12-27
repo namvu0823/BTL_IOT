@@ -8,14 +8,13 @@
 .container table {
     border: 1px solid #ddd;
     width: 100%;
-    border-collapse: collapse; /* Gộp các border */
+    border-radius: 10px;
 }
 
 .table-container {
     max-height: 300px; /* Chiều cao tối đa cho bảng */
     margin-top: 10px; /* Khoảng cách trên */
     border-radius: 10px;
-
 }
 
 .container th, .app-container td {
@@ -27,6 +26,8 @@
 .container th {
     background-color: #03a9f4; /* Màu nền cho tiêu đề */
     color: white; /* Màu chữ cho tiêu đề */
+    border-radius: 4px;
+    padding: 10px;
 }
 
 .container tr:hover {
@@ -63,7 +64,7 @@
 }
 
 .container h2 {
-    font-size: 1.5rem; /* Kích thước chữ cho h2 */
+    font-size: 1.45rem; /* Kích thước chữ cho h2 */
 
 }
 
