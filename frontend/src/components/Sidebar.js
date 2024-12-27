@@ -2,13 +2,19 @@ import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import {Link, NavLink} from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'; // Import useNavigate ở đây
 import "./Sidebar.css";
 
 library.add(fas);
 
+function Sidebar({ onLogout }) {
+  const navigate = useNavigate(); // Khởi tạo useNavigate
 
-function Sidebar() {
+  const handleLogout = () => {
+    onLogout(); // Gọi hàm đăng xuất
+    navigate("/login"); // Chuyển hướng đến trang login
+  };
+
   return (
     <div className="sidebar">
       <NavLink className={({ isActive }) => (isActive ? "menu-item active" : "menu-item")} to='/access-management'>
@@ -31,10 +37,10 @@ function Sidebar() {
         <div className="sidebar-title">Quản lý người dùng</div>
       </NavLink>
 
-      <NavLink className={({ isActive }) => (isActive ? "menu-item active" : "menu-item")} to='/logout'>
+      <div className="menu-item" onClick={handleLogout}>
         <FontAwesomeIcon icon="fa-solid fa-right-from-bracket" />
         <div className="sidebar-title">Đăng xuất</div>
-      </NavLink>
+      </div>
     </div>
   );
 }

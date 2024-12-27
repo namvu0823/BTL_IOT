@@ -1,13 +1,11 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client'; // Import createRoot
-import { BrowserRouter } from 'react-router-dom'; // Import BrowserRouter
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
-// Tìm element với id 'root'
 const rootElement = document.getElementById('root');
-const root = createRoot(rootElement); // Sử dụng createRoot
+const root = createRoot(rootElement);
 
-// Render ứng dụng
 root.render(
   <React.StrictMode>
     <BrowserRouter>

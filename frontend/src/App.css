@@ -3,6 +3,7 @@
     padding: 0px;
     margin: 0px;
 }
+
 .app-container {
     display: flex;
     flex-direction: column;
@@ -11,15 +12,7 @@
     color: #121212;
 }
 
-<<<<<<< HEAD
-/* Sidebar styling */
-.sidebar {
-    width: 250px;
-    background-color: #1f1f1f;
-    padding: 20px;
-=======
 .content-wrapper {
->>>>>>> c867ac6422132463d51d1a0a5b12820dd0890825
     display: flex;
     flex-direction: row;
 }
@@ -38,176 +31,5 @@
 .main {
     width: 95%;
     display: flex;
-<<<<<<< HEAD
-    flex-direction: column;
-    align-items: center;
-    overflow-y: auto; /* Cuộn khi nội dung quá dài */
-}
-
-.main h1 {
-    color: #03a9f4;
-    font-size: 2rem;
-    margin-bottom: 10px;
-    margin-top: -10px;
-}
-
-/* Form styling */
-form {
-    background-color: #1e1e1e;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.7);
-    width: 100%;
-    max-width: 500px;
-    margin-bottom: 20px;
-}
-
-form label {
-    color: #ffffff;
-    font-size: 1rem;
-    margin-bottom: 5px;
-    display: block;
-}
-
-form input, form textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #333;
-    border-radius: 5px;
-    background-color: #252525;
-    color: #ffffff;
-    font-size: 1rem;
-}
-
-form input::placeholder, form textarea::placeholder {
-    color: #777;
-}
-
-button {
-    width: 100%;
-    padding: 15px;
-    font-size: 1rem;
-    font-weight: bold;
-    background-color: #03a9f4;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-button:hover {
-    background-color: #0288d1;
-}
-
-button:active {
-    transform: scale(0.98);
-}
-
-/* Access Management styling */
-.access-management {
-    flex: 1;
-    padding: 40px;
-    background-color: #181818;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow-y: auto; /* Cuộn nếu cần */
-}
-
-.access-management h2 {
-    color: #03a9f4;
-    font-size: 2rem;
-    margin-bottom: 20px;
-}
-
-.access-management table {
-    width: 100%;
-    max-width: 800px;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.access-management table th, .access-management table td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #333;
-}
-
-.access-management table th {
-    background-color: #282828;
-    color: #ffffff;
-    font-size: 1rem;
-    font-weight: bold;
-}
-
-.access-management table td {
-    background-color: #1e1e1e;
-    color: #ffffff;
-}
-
-.access-management table tr:hover {
-    background-color: #252525;
-}
-.rfid-form {
-    margin-bottom: 20px;
-  }
-
-  .input-group {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-
-  .input-group .icon {
-    margin-right: 10px;
-    color: #007bff;
-    font-size: 1.2rem;
-  }
-
-  .input-group input {
-    flex: 1;
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-
-  .btn {
-    display: flex;
-    align-items: center;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-
-  .btn:hover {
-    background-color: #0056b3;
-  }
-
-  .btn .icon {
-    margin-right: 5px;
-  }
-
-  .rfid-list {
-    list-style: none;
-    padding: 0;
-  }
-
-  .rfid-item {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-  }
-=======
     justify-content: center;
 }
->>>>>>> c867ac6422132463d51d1a0a5b12820dd0890825
