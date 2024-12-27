@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
 
+
 const historySchema = new mongoose.Schema({
-  id_port: { type: String, required: true },
-  UID: { type: String, required: true }, 
-  finger:{type: String, required: true},
-  // access_type:{type: String, enum:['RFID','Fingerprint'], require: true},
-  time_in: { type: String, required: true},
-  status: { type: Boolean, required: true },
-} ,  {timestamps: true});
+  
+  userId:{type: mongoose.Types.ObjectId, ref: 'User'},
+  
+  portId: {type: mongoose.Types.ObjectId, ref: 'Device'},
+  date_in: { type: String, required: true },
+  time_in: { type: String, required: true },
+  
+});
 
 module.exports = mongoose.model('History', historySchema);

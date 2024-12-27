@@ -46,6 +46,25 @@ exports.getUserByUID = async (req, res) => {
   }
 };
 
+// Tìm mã vân tay theo UID 
+exports.getFingerprintByUid = async (req, res) => {
+  const { UID } = req.params;
+
+  try {
+    // Tìm người dùng theo UID
+    const user = await User.findOne({ UID });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Trả về mã vân tay
+    res.status(200).json({ fingerprint: user.fingerprint });
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving user data', error });
+  }
+};
+
 // Tạo người dùng mới
 exports.createUser = async (req, res) => {
   try {

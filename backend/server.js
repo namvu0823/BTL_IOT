@@ -10,6 +10,7 @@ const connectDB = require('./utils/db');
 const userRoutes = require('./routes/user');
 const deviceRoutes = require('./routes/device');
 const historyRoutes = require('./routes/history');
+const adminRoutes = require('./routes/admin')
 
 require('dotenv').config();
 
@@ -29,6 +30,7 @@ app.use(express.json());
 app.use('/api/users', userRoutes); //định tuyến user
 app.use('/api/devices', deviceRoutes); 
 app.use('/api/history', historyRoutes);
+app.use('/api/admin', adminRoutes)
 
 // // WebSocket setup
 // require('./utils/websocket')(wss);

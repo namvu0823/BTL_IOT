@@ -1,72 +1,65 @@
 
 const History = require('../models/History'); 
 const User = require('../models/User'); 
+const Device = require('../models/Device');
 
-
-// Hàm saveHistory để lưu lịch sử
+// Hàm lưu lịch sử
 exports.saveHistory = async (req, res) => {
   try {
-    const { header, UID, time, id_port } = req.body;
+    const { UID, id_port, time } = req.body;  
 
-    if (!header || !UID || !time || !id_port) {
-      return res.status(400).json({
-        success: false,
-        message: 'Missing required fields: header, UID, time, or id_port.',
-      });
-    }
-
-    // Kiểm tra nếu `time` không phải chuỗi hợp lệ
-    if (typeof time !== 'string') {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid time format. Must be a string.',
-      });
-    }
-
-    // Xác định trạng thái (status) dựa trên header
-    const status = header.includes('success') ? true : false;
-
-    // Tìm user dựa trên UID (lấy ObjectId từ UID)
+    // 1. Lấy thông tin người dùng 
     const user = await User.findOne({ UID });
-
     if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: 'User not found with this UID.',
-      });
+      return res.status(404).json({ message: 'User not found' });
+    }
+     
+    let userStatus = user.status;  
+
+    // 2. Đảo ngược trạng thái của người dùng
+    userStatus = (userStatus === 'in') ? 'out' : 'in';  
+
+    // 3. Lấy thông tin thiết bị theo id_port
+    const device = await Device.findOne({ id_port });
+    if (!device) {
+      return res.status(404).json({ message: 'Device not found' });
     }
 
-    // Tạo bản ghi lịch sử mới
-    const history = new History({
-      id_port, // Thêm id_port
-      UID: user._id,
-      finger: user.finger || null,
-      time_in: time, // Lưu chuỗi thời gian
-      status,
+    // 4. Tách thời gian thành date_in và time_in
+    const [date_in, time_in] = time.split(' ');
+
+    // 5. Tạo bản ghi mới trong cơ sở dữ liệu
+    const newHistory = new History({
+      userId: user._id,
+      portId: device._id, 
+      date_in,
+      time_in,
+  
     });
 
-    await history.save();
+    await newHistory.save();  
 
+    // Cập nhật trạng thái của người dùng trong cơ sở dữ liệu 
+    user.status = userStatus;  
+    await user.save();
+
+    // Trả về phản hồi thành công
     res.status(201).json({
       success: true,
-      message: 'History record saved successfully',
-      data: history,
+      message: 'Check-in history saved successfully',
+      data: newHistory,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Error saving history record',
-      error: error.message,
-    });
+    console.error('Error saving history:', error.message);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
 
-
 exports.getAllHistory = async (req, res) => {
     try {
-      // Lấy tất cả bản ghi lịch sử và điền thông tin người dùng (UID)
-      const histories = await History.find().populate('UID').populate('finger'); 
+      // Lấy tất cả bản ghi lịch sử
+      const histories = await History.find().populate('userId').populate('portId').sort({ date_in: -1, time_in: -1 })    
   
       if (!histories || histories.length === 0) {
         return res.status(404).json({
@@ -89,40 +82,17 @@ exports.getAllHistory = async (req, res) => {
     }
   };
 
-exports.getHistoryById = async (req, res) => {
-    try {
-      const { id } = req.params; 
-  
-      // Tìm bản ghi lịch sử theo _id
-      const history = await History.findById(id).populate('UID').populate('finger');
-  
-      if (!history) {
-        return res.status(404).json({
-          success: false,
-          message: 'History record not found',
-        });
-      }
-  
-      res.status(200).json({
-        success: true,
-        message: 'History record retrieved successfully',
-        data: history,
-      });
-    } catch (error) {
-      res.status(500).json({
-        success: false,
-        message: 'Error retrieving history record',
-        error: error.message,
-      });
-    }
-  };
 
 
 // Lấy lịch sử theo `id_port`
 exports.getHistoryByPort = async (req, res) => {
   try {
     const { id_port } = req.params;
-    const histories = await History.find({ id_port }).sort({ time_in: -1 });
+    const device = await Device.findOne({id_port})
+    if (!device) {
+      return res.status(404).json({ message: 'Device not found' });
+    }
+    const histories = await History.find({ portId: device._id }).populate({portId}).sort({ date_in: -1, time_in: -1 }) 
     if (!histories || histories.length === 0) {
       return res.status(404).json({ message: 'No history found for this port' });
     }
@@ -133,4 +103,22 @@ exports.getHistoryByPort = async (req, res) => {
   }
 };
 
+// Lấy lịch sử theo `UID`
+exports.getHistoryByUid = async (req, res) => {
+  try {
+    const {UID} = req.params;
+    const user = await User.findOne({UID})
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    const histories = await History.find({ userId: user._id }).populate('userId').sort({ date_in: -1, time_in: -1 }) 
+    if (!histories || histories.length === 0) {
+      return res.status(404).json({ message: 'No history found for this User' });
+    }
+    res.json(histories);
+  } catch (err) {
+    console.error('Error fetching histories:', err.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
 
