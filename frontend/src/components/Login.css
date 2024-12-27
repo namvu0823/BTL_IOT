@@ -7,7 +7,7 @@
     color: #ffffff; /* Màu chữ */
     display: flex; /* Sử dụng flexbox */
     z-index: 1000; /* Đảm bảo nó nằm trên các phần tử khác */
-    background-image: url('C:/Users/LE NHAT DUC/BTL_IOT/frontend/src/resource/background_4.jpg');
+    background-image: url('../resource/background_4.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

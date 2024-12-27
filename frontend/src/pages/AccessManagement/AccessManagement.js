@@ -181,7 +181,7 @@ const AccessManagement = () => {
     const [accessLogs, setAccessLogs] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 8;
+    const itemsPerPage = 4;
     
     useEffect(()=>{
         setAccessLogs(access);

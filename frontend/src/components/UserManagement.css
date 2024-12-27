@@ -1,27 +1,31 @@
 /* UserManagement.css */
 .container {
-    overflow-y: hidden;
+    width: 100%;
+    padding: 20px;
+
 }
 
 .container table {
+    border: 1px solid #ddd;
     width: 100%;
     border-collapse: collapse; /* Gộp các border */
 }
 
 .table-container {
-    overflow-y: auto; /* Cho phép cuộn dọc */
     max-height: 300px; /* Chiều cao tối đa cho bảng */
     margin-top: 10px; /* Khoảng cách trên */
+    border-radius: 10px;
+
 }
 
 .container th, .app-container td {
-    padding: 10px; /* Padding cho các ô */
+    padding: 5px; /* Padding cho các ô */
     text-align: left; /* Căn trái cho văn bản */
     border-bottom: 1px solid #ddd; /* Đường viền dưới */
 }
 
 .container th {
-    background-color: #007bff; /* Màu nền cho tiêu đề */
+    background-color: #03a9f4; /* Màu nền cho tiêu đề */
     color: white; /* Màu chữ cho tiêu đề */
 }
 
@@ -30,7 +34,8 @@
 }
 
 .button-container {
-    margin: 10px 0; /* Khoảng cách trên và dưới */
+    margin-top: 10px; /* Khoảng cách giữa bảng và nút */
+    margin-bottom: 20px; /* Khoảng cách dưới */
     text-align: center; /* Căn giữa */
 }
 
@@ -44,6 +49,7 @@
     transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền */
     font-size: 14px; /* Kích thước chữ */
     height: 40px; /* Chiều cao nút */
+    font-weight: 600;
     width: 80px; /* Chiều rộng nút */
 }
 
@@ -52,12 +58,13 @@
 }
 
 .container h2, .app-container h3 {
-    text-align: center; /* Căn giữa */
-    color: #03a9f4; /* Màu chữ */
+    text-align: left;
+    color: #333; /* Màu chữ */
 }
 
 .container h2 {
     font-size: 1.5rem; /* Kích thước chữ cho h2 */
+
 }
 
 .container h3 {
@@ -113,7 +120,6 @@
 /* Modal styles */
 .modal {
     display: flex; /* Sử dụng flexbox */
-    justify-content: center; /* Căn giữa theo chiều ngang */
     align-items: center; /* Căn giữa theo chiều dọc */
     position: fixed; /* Vị trí cố định */
     z-index: 1000; /* Đặt trên cùng */
@@ -126,11 +132,11 @@
 
 .modal-content {
     background-color: #fefefe; /* Màu nền cho nội dung modal */
-    margin: 15% auto; /* Lề trên và dưới */
-    padding: 20px; /* Padding cho nội dung */
+    margin: 25% auto; /* Lề trên và dưới */
+    padding: 40px; /* Padding cho nội dung */
     border: 1px solid #888; /* Viền cho modal */
     border-radius: 8px; /* Bo góc */
-    width: 300px; /* Chiều rộng modal */
+    width: 500px; /* Chiều rộng modal */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng */
 }
 
@@ -143,6 +149,7 @@
 
 .modal-input {
     width: 100%; /* Chiếm toàn bộ chiều rộng */
+    max-width: 100%;
     padding: 10px; /* Padding cho input */
     margin: 10px 0; /* Khoảng cách trên và dưới */
     border: 1px solid #ccc; /* Viền cho input */
@@ -159,6 +166,7 @@
     border: none; /* Không viền */
     border-radius: 4px; /* Bo góc */
     cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột */
+    font-weight: 600;
     transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền */
     font-size: 16px; /* Kích thước chữ cho nút */
 }
@@ -179,4 +187,69 @@
     color: black; /* Màu chữ khi hover */
     text-decoration: none; /* Không gạch chân */
     cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột */
+}
+
+.delete-button {
+    padding: 10px;
+    background-color: #dc3545;
+    color: #fff;
+    border: 1px solid #c82333;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.pagination button{
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination button.active {
+    background-color: #03a9f4;
+    color: #555;
+    font-weight: bold;
+}
+
+.pagination button.disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.first-row {
+    display: flex;
+    justify-content: space-between; /* Đẩy phần tử về hai phía */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    margin-bottom: 20px; /* Khoảng cách dưới cùng */
+}
+
+.first-row .search-user{
+    width: 500px;
+}
+
+.first-row .search-user .search-input {
+    width: 600px;
+    margin-left: 20px;
 }

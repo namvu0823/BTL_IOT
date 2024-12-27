@@ -4,7 +4,8 @@ import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import AccessManagement from "./pages/AccessManagement/AccessManagement";
 import DeviceManagement from "./pages/DeviceManagement/DeviceManagement";
-import UserManagement from "./pages/UserList/UserList";
+import UserList from "./pages/UserList/UserList";
+import UserManagement from "./components/UserManagement.js";
 import Login from "./components/Login"; // Nhớ import component Login
 import "./App.css";
 
@@ -28,8 +29,9 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/access-management" element={isLoggedIn ? <AccessManagement /> : <Login onLogin={handleLogin} />} />
-            <Route path="/user-list" element={isLoggedIn ? <UserManagement /> : <Login onLogin={handleLogin} />} />
+            <Route path="/user-list" element={isLoggedIn ? <UserList /> : <Login onLogin={handleLogin} />} />
             <Route path="/device-management" element={isLoggedIn ? <DeviceManagement /> : <Login onLogin={handleLogin} />} />
+            <Route path="/user-management" element={isLoggedIn ? <UserManagement /> : <Login onLogin={handleLogin} />} />
             <Route path="/" element={isLoggedIn ? <AccessManagement /> : <Login onLogin={handleLogin} />} />
           </Routes>
         </div>
