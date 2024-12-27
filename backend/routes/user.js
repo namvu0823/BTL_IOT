@@ -6,11 +6,11 @@ const router = express.Router();
 
 
 
-router.get('/:UID',getUserByUID)
-router.post('/', createUser)
-router.get('/', getAllUser)
-router.put('/:UID', updateUser);
-router.delete('/:UID',deleteUser)
+router.get('/:UID',getUserByUID);; //lấy user theo UID
+router.post('/', createUser); //tạo user
+router.get('/', getAllUser); //lấy tất cả user
+router.put('/:UID', updateUser); //update user
+router.delete('/:UID',deleteUser); //xóa user
 
 
 module.exports = router;

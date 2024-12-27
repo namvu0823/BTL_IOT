@@ -26,12 +26,12 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/users', userRoutes);
-app.use('/api/devices', deviceRoutes);
+app.use('/api/users', userRoutes); //định tuyến user
+app.use('/api/devices', deviceRoutes); 
 app.use('/api/history', historyRoutes);
 
-// WebSocket setup
-require('./utils/websocket')(wss);
+// // WebSocket setup
+// require('./utils/websocket')(wss);
 
 // Server listener
 const PORT = process.env.PORT || 3000;

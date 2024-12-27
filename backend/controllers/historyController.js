@@ -6,23 +6,25 @@ const User = require('../models/User');
 // Hàm saveHistory để lưu lịch sử
 exports.saveHistory = async (req, res) => {
   try {
-    const { header, UID, time, method } = req.body;
+    const { header, UID, time, id_port } = req.body;
 
-    if (!header || !UID || !time || !method) {
+    if (!header || !UID || !time || !id_port) {
       return res.status(400).json({
         success: false,
-        message: 'Missing required fields: header, UID, time, or method.',
+        message: 'Missing required fields: header, UID, time, or id_port.',
       });
     }
 
-    // Chuyển thời gian thành đối tượng Date
-    const time_in = new Date(time);
+    // Kiểm tra nếu `time` không phải chuỗi hợp lệ
+    if (typeof time !== 'string') {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid time format. Must be a string.',
+      });
+    }
 
     // Xác định trạng thái (status) dựa trên header
     const status = header.includes('success') ? true : false;
-
-    // Xác định access_type từ phương thức (method)
-    const access_type = method === 'fingerprint' ? 'Fingerprint' : 'RFID';
 
     // Tìm user dựa trên UID (lấy ObjectId từ UID)
     const user = await User.findOne({ UID });
@@ -36,15 +38,13 @@ exports.saveHistory = async (req, res) => {
 
     // Tạo bản ghi lịch sử mới
     const history = new History({
-      id_port: 'Port-001', 
-      UID: user._id, 
-      finger: user.finger || null, 
-      access_type,
-      time_in,
+      id_port, // Thêm id_port
+      UID: user._id,
+      finger: user.finger || null,
+      time_in: time, // Lưu chuỗi thời gian
       status,
     });
 
-   
     await history.save();
 
     res.status(201).json({
@@ -52,9 +52,7 @@ exports.saveHistory = async (req, res) => {
       message: 'History record saved successfully',
       data: history,
     });
-
   } catch (error) {
-    
     res.status(500).json({
       success: false,
       message: 'Error saving history record',
@@ -62,6 +60,7 @@ exports.saveHistory = async (req, res) => {
     });
   }
 };
+
 
 
 exports.getAllHistory = async (req, res) => {

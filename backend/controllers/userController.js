@@ -49,9 +49,9 @@ exports.getUserByUID = async (req, res) => {
 // Tạo người dùng mới
 exports.createUser = async (req, res) => {
   try {
-    const { UID, name, email, finger } = req.body;
+    const { UID, avatar, name, email, finger } = req.body;
 
-    if (!UID || !name || !email || !finger) {
+    if (!UID || !avatar || !name || !email || !finger) {
       return res.status(400).json({
         success: false,
         message: 'Missing required fields: UID, name, email, or finger.',
@@ -70,11 +70,12 @@ exports.createUser = async (req, res) => {
     // Tạo người dùng mới
     const user = new User({
       UID,
+      avatar,
       name,
       email,
       finger,
-      date_create: new Date(),
-      date_update: new Date(),
+      date_create,
+      date_update,
     });
 
     // Lưu người dùng vào cơ sở dữ liệu
@@ -121,9 +122,10 @@ exports.updateUser = async (req, res) => {
 
     // Cập nhật các trường
     user.name = name || user.name;
+    user.avatar = avatar || user.avatar;
     user.email = email || user.email;
     user.finger = finger || user.finger;  
-    user.date_update = new Date();  
+    user.date_update = date_update || user.date_update; ; 
 
     await user.save();
 
