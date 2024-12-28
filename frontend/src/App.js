@@ -11,6 +11,8 @@ import "./App.css";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State quản lý đăng nhập
+  const [savedPassword, setSavedPassword] = useState('password'); // Mật khẩu mặc định
+  const [isPasswordChanged, setIsPasswordChanged] = useState(false); // Trạng thái mật khẩu
 
   const handleLogin = () => {
     setIsLoggedIn(true); // Cập nhật trạng thái đăng nhập
@@ -22,17 +24,22 @@ function App() {
 
   return (
     <div className="app-container">
-      <Header />
+      <Header 
+        onLogout={handleLogout} 
+        savedPassword={savedPassword} 
+        setSavedPassword={setSavedPassword} 
+        setIsPasswordChanged={setIsPasswordChanged} 
+      />
       <div className="content-wrapper">
         <Sidebar onLogout={handleLogout} />
         <div className="main">
           <Routes>
-            <Route path="/login" element={<Login onLogin={handleLogin} />} />
-            <Route path="/access-management" element={isLoggedIn ? <AccessManagement /> : <Login onLogin={handleLogin} />} />
-            <Route path="/user-list" element={isLoggedIn ? <UserList /> : <Login onLogin={handleLogin} />} />
-            <Route path="/device-management" element={isLoggedIn ? <DeviceManagement /> : <Login onLogin={handleLogin} />} />
-            <Route path="/user-management" element={isLoggedIn ? <UserManagement /> : <Login onLogin={handleLogin} />} />
-            <Route path="/" element={isLoggedIn ? <AccessManagement /> : <Login onLogin={handleLogin} />} />
+            <Route path="/login" element={<Login onLogin={handleLogin} savedPassword={savedPassword} isPasswordChanged={isPasswordChanged} />} />
+            <Route path="/access-management" element={isLoggedIn ? <AccessManagement /> : <Login onLogin={handleLogin} savedPassword={savedPassword} isPasswordChanged={isPasswordChanged} />} />
+            <Route path="/user-list" element={isLoggedIn ? <UserList /> : <Login onLogin={handleLogin} savedPassword={savedPassword} isPasswordChanged={isPasswordChanged} />} />
+            <Route path="/device-management" element={isLoggedIn ? <DeviceManagement /> : <Login onLogin={handleLogin} savedPassword={savedPassword} isPasswordChanged={isPasswordChanged} />} />
+            <Route path="/user-management" element={isLoggedIn ? <UserManagement /> : <Login onLogin={handleLogin} savedPassword={savedPassword} isPasswordChanged={isPasswordChanged} />} />
+            <Route path="/" element={isLoggedIn ? <AccessManagement /> : <Login onLogin={handleLogin} savedPassword={savedPassword} isPasswordChanged={isPasswordChanged} />} />
           </Routes>
         </div>
       </div>
@@ -41,3 +48,4 @@ function App() {
 }
 
 export default App;
+1

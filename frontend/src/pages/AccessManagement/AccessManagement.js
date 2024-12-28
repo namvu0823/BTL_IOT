@@ -10,6 +10,9 @@ library.add(fas);
 
 
 const AccessManagement = () => {
+
+
+
     const access = [
         {
           fullName: "Nguyễn Văn A",
@@ -172,8 +175,6 @@ const AccessManagement = () => {
             action: "Chi tiết",
           },
     ];
-
-
 
     const [accessLogs, setAccessLogs] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
