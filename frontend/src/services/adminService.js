@@ -10,12 +10,12 @@ export const getAdmin = async() =>{
 }
 
 // update admin
-export const updateAdmin = async (, updatedData) => {
+export const updateAdmin = async (_id, updatedData) => {
     try {
-      const response = await api.put(`/api/users/${UID}`, updatedData);
+      const response = await api.put(`/api/admin/${_id}`, updatedData);
       return response.data; // Trả về kết quả từ API
     } catch (error) {
-      console.error("Error updating user:", error);
+      console.error("Error updating Admin:", error);
       throw error; 
     }
   };
