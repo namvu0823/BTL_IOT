@@ -6,15 +6,15 @@ const generateUID = () => Math.floor(Math.random() * 10000);
 
 function UserManagement() {
     const [users, setUsers] = useState([
-        { id: 1, name: "Nguyen Van A", uid: generateUID(), email: "a@example.com", fingerprint: "✔️", dateUpdated: "15/04/2024" },
-        { id: 2, name: "Tran Thi B", uid: generateUID(), email: "b@example.com", fingerprint: "✔️", dateUpdated: "15/04/2024" },
-        { id: 3, name: "Nguyen Van C", uid: generateUID(), email: "c@example.com", fingerprint: "✔️", dateUpdated: "15/04/2024" },
-        { id: 4, name: "Tran Thi D", uid: generateUID(), email: "d@example.com", fingerprint: "✔️", dateUpdated: "15/04/2024" },
-        { id: 5, name: "Nguyen Van E", uid: generateUID(), email: "e@example.com", fingerprint: "✔️", dateUpdated: "15/04/2024" },
-        { id: 6, name: "Tran Thi F", uid: generateUID(), email: "f@example.com", fingerprint: "✔️", dateUpdated: "15/04/2024" },
-        { id: 7, name: "Nguyen Van G", uid: generateUID(), email: "g@example.com", fingerprint: "✔️", dateUpdated: "15/04/2024" },
-        { id: 8, name: "Tran Thi H", uid: generateUID(), email: "h@example.com", fingerprint: "✔️", dateUpdated: "15/04/2024" },
-        { id: 9, name: "Nguyen Van I", uid: generateUID(), email: "i@example.com", fingerprint: "✔️", dateUpdated: "15/04/2024" },
+        { id: 1, name: "Nguyen Van A", uid: generateUID(), email: "a@example.com", fingerprint: "✔️", dateCreate: "15/04/2024", dateUpdated: "15/09/2024" },
+        { id: 2, name: "Tran Thi B", uid: generateUID(), email: "b@example.com", fingerprint: "✔️", dateCreate: "15/04/2024", dateUpdated: "15/09/2024" },
+        { id: 3, name: "Nguyen Van C", uid: generateUID(), email: "c@example.com", fingerprint: "✔️", dateCreate: "15/04/2024", dateUpdated: "15/05/2024" },
+        { id: 4, name: "Tran Thi D", uid: generateUID(), email: "d@example.com", fingerprint: "✔️", dateCreate: "15/04/2024", dateUpdated: "15/07/2024" },
+        { id: 5, name: "Nguyen Van E", uid: generateUID(), email: "e@example.com", fingerprint: "✔️", dateCreate: "15/04/2024", dateUpdated: "15/08/2024" },
+        { id: 6, name: "Tran Thi F", uid: generateUID(), email: "f@example.com", fingerprint: "✔️", dateCreate: "15/04/2024", dateUpdated: "15/09/2024" },
+        { id: 7, name: "Nguyen Van G", uid: generateUID(), email: "g@example.com", fingerprint: "✔️", dateCreate: "15/04/2024", dateUpdated: "15/11/2024" },
+        { id: 8, name: "Tran Thi H", uid: generateUID(), email: "h@example.com", fingerprint: "✔️", dateCreate: "15/04/2024", dateUpdated: "15/12/2024" },
+        { id: 9, name: "Nguyen Van I", uid: generateUID(), email: "i@example.com", fingerprint: "✔️", dateCreate: "15/04/2024", dateUpdated: "15/10/2024" },
     ]);
 
     const [searchTerm, setSearchTerm] = useState("");
@@ -35,6 +35,7 @@ function UserManagement() {
             uid: generateUID(),
             email: newUserEmail,
             fingerprint: "✔️",
+            dateCreate: new Date().toLocalDateString(),
             dateUpdated: new Date().toLocaleDateString(),
             image: newUserImage,
         };
@@ -113,6 +114,7 @@ function UserManagement() {
                             <th>Name</th>
                             <th>UID</th>
                             <th>Email</th>
+                            <th>Date Create</th>
                             <th>Date Updated</th>
                             <th>Actions</th>
                         </tr>
@@ -123,6 +125,7 @@ function UserManagement() {
                                 <td>{user.name}</td>
                                 <td>{user.uid}</td>
                                 <td>{user.email}</td>
+                                <td>{user.dateCreate}</td>
                                 <td>{user.dateUpdated}</td>
                                 <td>
                                     <button className="delete-button" onClick={() => handleDeleteUser(user.id)}>Xóa</button>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import axios from 'axios'; 
 import './DeviceManagement.css';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -11,6 +12,23 @@ const DeviceManagement = () => {
     labels: [],
     datasets: [],
   });
+
+  const getDevices = () => {
+    axios.get('http://localhost:3000/api/devices')
+        .then(response => {
+            setDevices(response.data.data);
+
+        })
+        .catch(error => {
+            console.error('There was a problem with the request:', error.message);
+        });
+};
+
+useEffect(() => {
+    getDevices();
+}, []);
+console.log("devices",devices);
+
 
   // Mock data
   const accessLogs = [
@@ -27,13 +45,9 @@ const DeviceManagement = () => {
   ];
 
   // Initialize devices
-  useEffect(() => {
-    const deviceExample = [
-      { id_port: '1' },
-      { id_port: '2' },
-    ];
-    setDevices(deviceExample);
-  }, []);
+
+
+
 
   useEffect(() => {
     const logsByDate = accessLogs.reduce((acc, log) => {
@@ -85,6 +99,7 @@ const DeviceManagement = () => {
               <tr>
                 <td>STT</td>
                 <td>Tên thiết bị</td>
+                <td>Vị trí</td>
               </tr>
             </thead>
             <tbody>
@@ -92,6 +107,7 @@ const DeviceManagement = () => {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>Thiết bị {device.id_port}</td>
+                  <td>{device.location}</td>
                 </tr>
               ))}
             </tbody>

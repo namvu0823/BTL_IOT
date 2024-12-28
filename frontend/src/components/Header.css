@@ -1,3 +1,4 @@
+
 .header {
     background-color: #2fa44b;
     height: 50px;
@@ -11,11 +12,111 @@
 
 .logo-header {
     display: flex;
-    gap: 10px
-
+    align-items: center;
 }
-.header .user {
+
+.logo-header-title {
+    margin-left: 10px;
+    font-size: 24px;
+}
+
+.user {
+    position: relative; /* Để định vị tùy chọn */
     display: flex;
+    align-items: center;
     flex-direction: row;
     gap: 10px;
+}
+
+.user-options {
+    position: absolute; /* Để hiển thị bên dưới ảnh đại diện */
+    top: 100%; /* Đặt bên dưới ảnh đại diện */
+    right: 0; /* Căn phải */
+    background-color: white; /* Màu nền cho tùy chọn */
+    border: 1px solid #ccc; /* Đường viền */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+    z-index: 1000; /* Để đảm bảo tùy chọn hiển thị trên các phần khác */
+    display: flex; /* Hiển thị dưới dạng flexbox */
+    flex-direction: column; /* Sắp xếp theo chiều dọc */
+    width: 200px;
+}
+
+.option-button {
+    padding: 10px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    text-align: left; /* Căn trái */
+    color: black;
+}
+
+.option-button:hover {
+    background-color: #f0f0f0; /* Màu nền khi hover */
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; /* Để đảm bảo modal hiển thị trên tất cả */
+}
+
+.modal-content-change-password {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 500px;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.modal-content-change-password input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    max-width: 400px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center; /* Căn giữa nút */
+    margin-top: 15px; /* Để tạo khoảng cách trên nút */
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #2fa44b; /* Màu nền button */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #278a3a; /* Màu nền khi hover */
+}
+
+.label-input {
+    color: black; 
+    margin: 10px 0 5px; 
+    display: block; 
+    font-size: 20px;
+}
+
+.modal-content-change-password h2 {
+    font-size: 1.3em;
 }
