@@ -72,3 +72,23 @@ input {
 .login_button:hover {
     background-color: #2fa44b;  /* Màu nền khi hover (xanh dương đậm) */
 }
+
+.check-box-container {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: flex-end; /* Đẩy về phía bên phải */
+    margin-top: 10px; 
+    color: black;
+    width: 540px;
+}
+
+.check-box {
+    margin-right: 5px; /* Khoảng cách nhỏ giữa checkbox và label */
+    transform: scale(1.2); /* Kích thước tự nhiên */
+    cursor: pointer; 
+    width: 10px;
+}
+
+.check-box-container .label-check-box {
+    width: 200px;
+}
