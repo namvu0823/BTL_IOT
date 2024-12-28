@@ -9,9 +9,9 @@ exports.getAllUser = async (req, res) => {
     // Kiểm tra nếu không có người dùng nào
     if (users.length === 0) {
       return res.status(404).json({
-        success: false,
+        success: true,
         message: 'No users found.',
-        data: users
+        data: users,
       });
     }
 
