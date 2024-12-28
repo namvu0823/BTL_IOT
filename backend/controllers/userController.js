@@ -70,7 +70,7 @@ exports.createUser = async (req, res) => {
   try {
     const { UID, avatar, name, email, finger } = req.body;
 
-    if (!UID || !avatar || !name || !email || !finger) {
+    if (!UID || !name || !email || !finger) {
       return res.status(400).json({
         success: false,
         message: 'Missing required fields: UID, name, email, or finger.',
@@ -89,12 +89,10 @@ exports.createUser = async (req, res) => {
     // Tạo người dùng mới
     const user = new User({
       UID,
-      avatar,
+      avatar:avatar || null,
       name,
       email,
       finger,
-      date_create,
-      date_update,
     });
 
     // Lưu người dùng vào cơ sở dữ liệu

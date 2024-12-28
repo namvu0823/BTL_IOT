@@ -3,21 +3,53 @@ const History = require('../models/History');
 const User = require('../models/User'); 
 const Device = require('../models/Device');
 
+//Hàm hỗ trợ set trạng thái User
+const updateStatusUser = async (userId, newStatus) => {
+  try {
+    // Tìm người dùng theo userId
+    const user = await User.findById(userId);
+    
+    // Nếu không tìm thấy người dùng
+    if (!user) {
+      return { success: false, message: 'User not found.' };
+    }
+
+    // Cập nhật trạng thái của người dùng
+    user.status = newStatus;
+    user.date_update = new Date(); // Cập nhật thời gian sửa đổi
+
+    // Lưu người dùng sau khi cập nhật
+    await user.save();
+
+    // Trả về kết quả thành công
+    return { success: true, message: 'User status updated successfully.', data: user };
+  } catch (error) {
+    // Xử lý lỗi
+    return { success: false, message: 'Error updating user status.', error: error.message };
+  }
+};
+
+
 // Hàm lưu lịch sử
 exports.saveHistory = async (req, res) => {
   try {
     const { UID, id_port, time } = req.body;  
 
-    // 1. Lấy thông tin người dùng 
+    // 1. Lấy thông tin người dùng
     const user = await User.findOne({ UID });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-     
-    let userStatus = user.status;  
+
+    // Kiểm tra chắc chắn rằng user._id là hợp lệ
+    if (!user._id) {
+      return res.status(400).json({ message: 'Invalid user data' });
+    }
+
+    let userStatus = user.status;
 
     // 2. Đảo ngược trạng thái của người dùng
-    userStatus = (userStatus === 'in') ? 'out' : 'in';  
+    userStatus = (userStatus === 'in') ? 'out' : 'in';
 
     // 3. Lấy thông tin thiết bị theo id_port
     const device = await Device.findOne({ id_port });
@@ -30,17 +62,21 @@ exports.saveHistory = async (req, res) => {
 
     // 5. Tạo bản ghi mới trong cơ sở dữ liệu
     const newHistory = new History({
-      userId: user._id,
-      portId: device._id, 
+      userId: user._id,    
+      portId: device._id,  
       date_in,
       time_in,
-  
     });
 
-    await newHistory.save();  
+    // Kiểm tra trường userId trước khi lưu (đảm bảo không null)
+    if (!newHistory.userId) {
+      return res.status(400).json({ message: 'Invalid userId' });
+    }
 
-    // Cập nhật trạng thái của người dùng trong cơ sở dữ liệu 
-    user.status = userStatus;  
+    await newHistory.save();
+
+    // Cập nhật trạng thái của người dùng trong cơ sở dữ liệu
+    user.status = userStatus;
     await user.save();
 
     // Trả về phản hồi thành công
@@ -54,6 +90,27 @@ exports.saveHistory = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+// exports.saveHistory = async (req, res) => {
+//   try {
+//       // Tạo và lưu showtime mới
+//       const history = new History(req.body);
+//       await history.save();
+
+//       // Populate các trường tham chiếu
+//       const populatedHistory = await history.populate(['userId', 'portId']);
+
+//       // Trả về phản hồi thành công
+//       res.status(201).json({
+//           status: 'success',
+//           message: 'Showtime created successfully',
+//           data: populatedHistory,
+//       });
+//   } catch (error) {
+//         console.error('Error saving history:', error.message);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// };
 
 
 exports.getAllHistory = async (req, res) => {
