@@ -1,7 +1,7 @@
 
 const Device = require('../models/Device'); 
 
-exports.createDevice = async (req, res) => {
+exports.createDevice = async (req, res) => { //Nam cần dùng đến (frontend k dùng đến)
     try {
       const { id_port, location } = req.body;
   

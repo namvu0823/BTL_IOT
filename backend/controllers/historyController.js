@@ -4,7 +4,7 @@ const User = require('../models/User');
 
 
 // Hàm saveHistory để lưu lịch sử
-exports.saveHistory = async (req, res) => {
+exports.saveHistory = async (req, res) => { //Nam dùng đến (frontend không dùng đến)
   try {
     const { header, UID, time, id_port } = req.body;
 

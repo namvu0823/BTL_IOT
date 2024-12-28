@@ -46,15 +46,15 @@ exports.getUserByUID = async (req, res) => {
   }
 };
 
-// Tạo người dùng mới
+// Tạo người dùng mới (nhận từ frontend)
 exports.createUser = async (req, res) => {
   try {
-    const { UID, avatar, name, email, finger } = req.body;
+    const { UID, avatar, name, email } = req.body;
 
-    if (!UID || !avatar || !name || !email || !finger) {
+    if (!UID || !avatar || !name || !email) {
       return res.status(400).json({
         success: false,
-        message: 'Missing required fields: UID, name, email, or finger.',
+        message: 'Missing required fields: UID, avatar, name, or email.',
       });
     }
 
@@ -67,29 +67,28 @@ exports.createUser = async (req, res) => {
       });
     }
 
-    // Tạo người dùng mới
+    // Lưu người dùng với trạng thái "Pending" (chờ finger từ WebSocket)
     const user = new User({
       UID,
       avatar,
       name,
       email,
-      finger,
-      date_create,
-      date_update,
+      finger: null, // Chưa có finger
+      registration_status: 'Pending', // Trạng thái mới
+      date_create: new Date().toISOString(),
+      date_update: new Date().toISOString(),
     });
+    
 
-    // Lưu người dùng vào cơ sở dữ liệu
     await user.save();
 
-    // Trả về kết quả thành công
     return res.status(201).json({
       success: true,
-      message: 'User created successfully.',
+      message: 'User created successfully. Waiting for finger.',
       data: user,
     });
 
   } catch (error) {
-    // Xử lý lỗi
     return res.status(500).json({
       success: false,
       message: 'Error creating user.',
@@ -98,7 +97,7 @@ exports.createUser = async (req, res) => {
   }
 };
 
-// Hàm updateUser để cập nhật thông tin người dùng
+// Hàm updateUser để cập nhật thông tin người dùng (không dùng)
 exports.updateUser = async (req, res) => {
   try {
     const { UID } = req.params;  
