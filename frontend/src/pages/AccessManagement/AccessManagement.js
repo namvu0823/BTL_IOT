@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -39,17 +38,14 @@ const AccessManagement = () => {
     };
 
     // Kết hợp dữ liệu userName vào accessLogs
-    const mergeUserNames = () => {
-      console.log(accessLogs);
-      console.log(users);
-        const updatedLogs = accessLogs.map(log => {
-            const user = users.find(user => user.UID === log.UID); // Ghép theo UID
+    const mergeUserNames = (accessLogsData, usersData) => {
+        return accessLogsData.map(log => {
+            const user = usersData.find(user => user.UID === log.UID); // Ghép theo UID
             return {
                 ...log,
                 name: user ? user.name : 'Không xác định', // Thêm userName
             };
         });
-        setAccessLogs(updatedLogs);
     };
 
     useEffect(() => {
@@ -59,9 +55,10 @@ const AccessManagement = () => {
 
     useEffect(() => {
         if (users.length > 0 && accessLogs.length > 0) {
-            mergeUserNames();
+            const updatedAccessLogs = mergeUserNames(accessLogs, users);
+            setAccessLogs(updatedAccessLogs); // Cập nhật accessLogs với dữ liệu đã ghép
         }
-    }, []);
+    }, [users, accessLogs.length]); // Chỉ gọi khi users thay đổi hoặc khi accessLogs có dữ liệu
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -78,11 +75,10 @@ const AccessManagement = () => {
         setSearchTerm(value);
 
         const filteredLogs = accessLogs.filter((log) =>
-            log.fullName.toLowerCase().includes(value) ||
+            log.name.toLowerCase().includes(value) ||
             log.time_in.toLowerCase().includes(value) ||
-            log.accessType.toLowerCase().includes(value) ||
             log.status.toString().toLowerCase().includes(value) ||
-            log.device.toLowerCase().includes(value)
+            log.id_port.toLowerCase().includes(value)
         );
 
         setAccessLogs(filteredLogs);
@@ -108,7 +104,6 @@ const AccessManagement = () => {
                 <thead>
                     <tr>
                         <td>STT</td>
-                        <td>#</td>
                         <td>Họ và tên</td>
                         <td>Giờ quét</td>
                         <td>Ngày quét</td>
@@ -121,21 +116,16 @@ const AccessManagement = () => {
                         currentLogs.map((log, index) => (
                             <tr key={index}>
                                 <td>{indexOfFirstItem + index + 1}</td>
-                                <td><img src={avatar} alt="Avatar" /></td>
                                 <td>{log.name}</td>
-                                                               
-                                <td className='time-access'>{log.time_in ? new Date(log.time_in).toISOString().split('T')[1].substring(0,8) : 'Invalid Date'}
-                                </td>
-                                <td >
-                                    {log.time_in ? new Date(log.time_in).toISOString().split('T')[0] : 'Invalid Date'}
-                                </td>
+                                <td className='time-access'>{log.time_in ? new Date(log.time_in).toLocaleTimeString() : 'Invalid Date'}</td>
+                                <td>{log.time_in ? new Date(log.time_in).toLocaleDateString() : 'Invalid Date'}</td>
                                 <td>{log.status ? "Vào" : "Ra"}</td>
                                 <td>{log.id_port}</td>
                             </tr>
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="8" style={{ textAlign: 'center' }}>
+                            <td colSpan="7" style={{ textAlign: 'center' }}>
                                 Không có kết quả nào hiển thị
                             </td>
                         </tr>

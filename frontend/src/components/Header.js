@@ -67,7 +67,6 @@ const Header = ({ onLogout, savedPassword, setSavedPassword, setIsPasswordChange
         {showOptions && (
           <div className='user-options'>
             <button className='option-button' onClick={() => setShowModal(true)}>Thay đổi mật khẩu đăng nhập</button>
-            <button className='option-button' onClick={() => setShowModal(true)}>Thay đổi mật khẩu cổng</button>
             <button className='option-button' onClick={onLogout}>Đăng xuất</button>
           </div>
         )}
