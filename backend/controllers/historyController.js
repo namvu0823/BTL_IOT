@@ -30,7 +30,7 @@ exports.saveHistory = async (req, res) => {
     const history = new History({
       id_port:id_port, // Thêm id_port
       UID: UID,
-      finger: user.finger||null,
+      finger: String(user.finger)||null,
       time_in: time, // Lưu thời gian thực dạng chuỗi
       status: status
     });

@@ -199,8 +199,18 @@ class WebSocketHandler {
                     })
 
 
+                })  .then(response => response.json().then(data => ({ status: response.status, body: data })))
+                .then(({ status, body }) => {
+                    if (status >= 400) {
+                        throw new Error(`HTTP error! Status: ${status} - ${body.message}`);
+                    }
+                    console.log('Success:', body);
                 })
-            } 
+                .catch(error => {
+                    console.error('Error:', error.message);
+                });
+            }
+            
             else if(data.status === 'Check_in failed'){
                 fetch('http://localhost:3000/api/history',{
                     method: 'POST',
@@ -216,6 +226,18 @@ class WebSocketHandler {
                     })
 
                 })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
             }
             //this.pendingResponses.delete(UID);
         //}
