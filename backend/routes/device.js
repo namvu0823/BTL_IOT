@@ -3,9 +3,9 @@ const { getDeviceByPort, createDevice, getAllDevices, deleteDevice } = require('
 
 const router = express.Router();
 
-router.get('/:id_port', getDeviceByPort);
-router.post('/', createDevice);
-router.get('/',getAllDevices)
-router.delete('/:id_port', deleteDevice)
+router.get('/:id_port', getDeviceByPort); //lấy thiết bị theo id_port
+router.post('/', createDevice); //tạo thiết bị
+router.get('/',getAllDevices); //lấy tất cả thiết bị
+router.delete('/:id_port', deleteDevice); //xóa thiết bị
 
 module.exports = router;
