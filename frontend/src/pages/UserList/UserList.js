@@ -85,7 +85,6 @@ const UserManagement = () => {
                             <td>UID</td>
                             <td>Email</td>
                             <td>Ngày đăng ký</td>
-                            <td>Ngày cập nhật</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -97,7 +96,6 @@ const UserManagement = () => {
                                     <td>{user.UID}</td>
                                     <td>{user.email}</td>
                                     <td>{user.date_create}</td>
-                                    <td>{user.date_update}</td>
                                 </tr>
                             ))
                         ) : (
