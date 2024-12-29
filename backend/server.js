@@ -29,55 +29,6 @@ app.use('/api/devices', deviceRoutes);
 app.use('/api/history', historyRoutes);
 app.use('/api/admin', adminRoutes);
 
-// Endpoint: Tạo hoặc thay đổi mật khẩu mở khóa
-// app.post('/api/password', (req, res) => {
-//   const { password } = req.body;
-
-//   if (!password || typeof password !== 'string') {
-//     return res.status(400).json({
-//       success: false,
-//       message: 'Password is required and must be a string.',
-//     });
-//   }
-
-// //   // Lưu mật khẩu vào file password.json
-//   const passwordData = { password };
-
-//   fs.writeFile('./password.json', JSON.stringify(passwordData, null, 2), (err) => {
-//     if (err) {
-//       console.error('Error writing password file:', err);
-//       return res.status(500).json({
-//         success: false,
-//         message: 'Failed to save password.',
-//       });
-//     }
-
-//     return res.status(200).json({
-//       success: true,
-//       message: 'Password updated successfully.',
-//     });
-//   });
-// });
-
-// Endpoint: Đọc mật khẩu mở khóa
-// app.get('/api/password', (req, res) => {
-//   fs.readFile('./password.json', 'utf8', (err, data) => {
-//     if (err) {
-//       console.error('Error reading password file:', err);
-//       return res.status(500).json({
-//         success: false,
-//         message: 'Failed to read password.',
-//       });
-//     }
-
-//     const passwordData = JSON.parse(data);
-//     return res.status(200).json({
-//       success: true,
-//       message: 'Password retrieved successfully.',
-//       data: passwordData,
-//     });
-//   });
-// });
 
 app.post('/api/thongbao_user_moi', (req, res) => {
     try {
@@ -91,20 +42,7 @@ app.post('/api/thongbao_user_moi', (req, res) => {
             });
         }
 
-        // Kiểm tra thiết bị có ID này đang kết nối không
-        if (!wsHandler.getConnectedDevices().includes(id_port)) {
-            return res.status(404).json({
-                success: false,
-                message: `Device with id_port ${id_port} is not connected`
-            });
-        }
-
-        // Thiết lập trạng thái chờ phản hồi
-        wsHandler.setPendingResponse(id_port, res);
-
-        // Gửi thông điệp tới thiết bị với id_port cụ thể
         wsHandler.sendToESP32({ header, UID }, id_port);
-
         console.log(`Đã gửi thông báo tới thiết bị có ID: ${id_port}`);
     } catch (error) {
         console.error('Error sending notification:', error);
