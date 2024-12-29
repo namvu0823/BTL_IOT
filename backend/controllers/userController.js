@@ -9,9 +9,8 @@ exports.getAllUser = async (req, res) => {
     // Kiểm tra nếu không có người dùng nào
     if (users.length === 0) {
       return res.status(404).json({
-        success: true,
+        success: false,
         message: 'No users found.',
-        data: users,
       });
     }
 
@@ -36,7 +35,7 @@ exports.getAllUser = async (req, res) => {
 exports.getUserByUID = async (req, res) => {
   try {
     const { UID } = req.params;
-    const user = await User.findOne({ UID });
+    const user = await User.findOne({UID});
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -75,18 +74,20 @@ exports.createUser = async (req, res) => {
       name,
       email,
       finger: null, // Chưa có finger
-      registration_status: 'Pending', // Trạng thái mới
+      //registration_status: 'Pending', // Trạng thái mới
       date_create: new Date().toISOString(),
       date_update: new Date().toISOString(),
     });
-    
 
     await user.save();
+
+    // Call the function before sending response
+    await send_new_users_request(UID);
 
     return res.status(201).json({
       success: true,
       message: 'User created successfully. Waiting for finger.',
-      data: user,
+      data: user
     });
 
   } catch (error) {
@@ -98,16 +99,93 @@ exports.createUser = async (req, res) => {
   }
 };
 
-// Hàm updateUser để cập nhật thông tin người dùng (không dùng)
+// Separate async function for sending new user request
+async function send_new_users_request(UID) {
+  try {
+    // const response = await fetch('http://localhost:3000/api/password', {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // });
+    // const result = await response.json();
+
+    await fetch('http://localhost:3000/api/thongbao_user_moi', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id_port: "7",
+        header: "Create new account",
+        UID: UID,
+        //password: result.data,
+      })
+    });
+  } catch (error) {
+    console.error('Error in send_new_users_request:', error);
+    throw error;
+  }
+}
+
+// exports.updateUser = async (req, res) => {
+//   try {
+//     const { UID } = req.params;  
+//     const {finger} = req.body;
+
+//     if (!UID) {
+//       return res.status(400).json({
+//         success: false,
+//         message: 'UID is required.',
+//       });
+//     }
+
+//     // Tìm người dùng dựa trên UID
+//     const user = await User.findOne({ UID });
+//     if (!user) {
+//       return res.status(404).json({
+//         success: false,
+//         message: 'User not found.',
+//       });
+//     }
+//     // Cập nhật các trường
+//     user.finger = finger || user.finger;  
+//     await user.save();
+
+//     return res.status(200).json({
+//       success: true,
+//       message: 'User updated successfully.',
+//       data: user,
+//     });
+
+//   } catch (error) {
+//     // Xử lý lỗi
+//     return res.status(500).json({
+//       success: false,
+//       message: 'Error updating user.',
+//       error: error.message,
+//     });
+//   }
+// };
+
 exports.updateUser = async (req, res) => {
   try {
-    const { UID } = req.params;  
-    const { name, email, finger } = req.body;
+    const { UID } = req.params; // Lấy UID từ params
+    const { UID: bodyUID, finger } = req.body; // Lấy UID và finger từ body
 
-    if (!UID) {
+    // Kiểm tra nếu UID trong params hoặc body không hợp lệ
+    if (!UID || !bodyUID) {
       return res.status(400).json({
         success: false,
-        message: 'UID is required.',
+        message: 'Both UID in params and body are required.',
+      });
+    }
+
+    // Kiểm tra nếu UID trong params và body không khớp
+    if (UID !== bodyUID) {
+      return res.status(400).json({
+        success: false,
+        message: 'UID in params does not match UID in body.',
       });
     }
 
@@ -120,21 +198,20 @@ exports.updateUser = async (req, res) => {
       });
     }
 
-    // Cập nhật các trường
-    user.name = name || user.name;
-    user.avatar = avatar || user.avatar;
-    user.email = email || user.email;
-    user.finger = finger || user.finger;  
-    user.date_update = date_update || user.date_update; ; 
+    // Cập nhật dữ liệu của người dùng
+    if (finger) {
+      user.finger = finger; // Cập nhật trường "finger" nếu có trong body
+    }
 
+    // Lưu thay đổi vào cơ sở dữ liệu
     await user.save();
 
+    // Trả về phản hồi thành công
     return res.status(200).json({
       success: true,
       message: 'User updated successfully.',
       data: user,
     });
-
   } catch (error) {
     // Xử lý lỗi
     return res.status(500).json({
@@ -144,6 +221,7 @@ exports.updateUser = async (req, res) => {
     });
   }
 };
+
 
 // Hàm deleteUser để xóa người dùng
 exports.deleteUser = async (req, res) => {
