@@ -86,7 +86,7 @@ const DeviceManagement = () => {
             <thead>
               <tr>
                 <td>STT</td>
-                <td>Tên thiết bị</td>
+                <td>Tên cổng</td>
                 <td>Vị trí</td>
               </tr>
             </thead>
@@ -94,8 +94,8 @@ const DeviceManagement = () => {
               {devices.map((device, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>Thiết bị {device.id_port}</td>
-                  <td>{device.location}</td>
+                  <td>Cổng {device.id_port}</td>
+                  <td>Cổng {device.id_port}</td>
                 </tr>
               ))}
             </tbody>
