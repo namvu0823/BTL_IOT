@@ -45,7 +45,7 @@ const DeviceManagement = () => {
   useEffect(() => {
     const processHistoryData = () => {
       const logsByDate = history.reduce((acc, log) => {
-        const date = new Date(log.time_in).toISOString().split('T')[0]; 
+        const date = new Date(log.time_in).toLocaleDateString(); 
         acc[date] = (acc[date] || 0) + 1;
         return acc;
       }, {});

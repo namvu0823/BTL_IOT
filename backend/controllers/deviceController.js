@@ -23,6 +23,8 @@ exports.createDevice = async (req, res) => { //Nam cần dùng đến (frontend 
       res.status(500).json({ message: 'Error creating device', error: error.message });
     }
   };
+
+  
   
   // lấy các thiết bị
   exports.getAllDevices = async (req, res) => {

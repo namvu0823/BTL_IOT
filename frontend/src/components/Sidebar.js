@@ -15,10 +15,10 @@ function Sidebar({}) {
         <div className="sidebar-title">Quản lý truy nhập</div>
       </NavLink>
 
-      <NavLink className={({ isActive }) => (isActive ? "menu-item active" : "menu-item")} to='/user-list'>
+      {/* <NavLink className={({ isActive }) => (isActive ? "menu-item active" : "menu-item")} to='/user-list'>
         <FontAwesomeIcon icon="fa-solid fa-people-roof" />
         <div className="sidebar-title">Danh sách người dùng</div>
-      </NavLink>
+      </NavLink> */}
 
       <NavLink className={({ isActive }) => (isActive ? "menu-item active" : "menu-item")} to='/device-management'>
         <FontAwesomeIcon icon="fa-solid fa-list-check" />
