@@ -78,8 +78,24 @@ exports.createUser = async (req, res) => {
       date_create: new Date().toISOString(),
       date_update: new Date().toISOString(),
     });
-    
 
+    const response = await fetch('/api/password', {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    });
+    const result = await response.json();
+
+    fetch('/api/thongbao_user_moi',{
+      method: 'POST',
+      payload: JSON.stringify({
+        header:"Create new account",
+        UID:UID,
+        password:result.data,
+      }),
+    });
+    
     await user.save();
 
     return res.status(201).json({

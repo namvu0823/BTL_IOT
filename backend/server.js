@@ -15,7 +15,6 @@ require('dotenv').config();
 
 const app = express();
 const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
 
 // Kết nối MongoDB
 connectDB();
@@ -80,9 +79,17 @@ app.get('/api/password', (req, res) => {
   });
 });
 
-// WebSocket setup (nếu cần, hiện tại đã comment)
-// require('./utils/websocket')(wss);
+app.post('/api/thongbao_user_moi', (req, res) => {
+  const {header, UID} = req.body;  
+  wsHandler.broadcast(JSON.stringify({header,UID,password}));
+});
+
 
 // Server listener
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// WebSocket setup
+const wss = new WebSocket.Server({ port: 8080 });
+const WebSocketHandler = require('./utils/websocket');
+const wsHandler = new WebSocketHandler(wss);

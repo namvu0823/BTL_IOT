@@ -1,12 +1,13 @@
 const WebSocket = require('ws');
 
 class WebSocketHandler {
-    constructor(port) {
-        this.wss = new WebSocket.Server({ port });
+    constructor(wss) {  // Nhận WebSocket server từ bên ngoài thay vì tạo mới
+        this.wss = wss;
         this.pendingResponses = new Map();
-        this.connectedDevices = new Map(); // lưu các esp 32 kết nói với id
+        this.connectedDevices = new Map(); // lưu các esp 32 kết nối với id
         this.initialize();
     }
+
 
     initialize() {
         console.log(`WebSocket Server running on port ${this.wss.options.port}`);
@@ -44,15 +45,15 @@ class WebSocketHandler {
     }
 
     handleTin_nhan_ket_noi(ws, id) {
-        console.log(`ESP32 connected with ID_cong: ${id}`);//thông báo esp32 kết nối thành công với ID
+        console.log(`ESP32 connected with ID_cong: ${id}`);// thông tin esp32 kết nối thành công với ID rồi gửi về server
         this.connectedDevices.set(id, ws);//thêm cổng với id vào map lưu trữ
-        fetch('/api/devices',{//gửi tới enpoint tạo devieces
+        fetch('http://localhost:3000/api/devices/',{//gửi tới enpoint tạo devieces
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                id_port: id
+                id_port:String(id),  
             })
         })
         .then(response => {
@@ -80,7 +81,7 @@ class WebSocketHandler {
                 this.handle_check_in_Request(data);
             }
             else if (data.header === 'Check_in response') {
-                this.handleCheck_In_Response(data);//phản hòi luồng checkin
+                this.handleCheck_In_Response(data);//phản hôi luồng checkin
             }
         } catch (error) {
             console.error('Error handling message:', error);
@@ -99,17 +100,23 @@ class WebSocketHandler {
                     status: 'success',
                     finger: finger
                 });
-            } else {
-                res.json({
-                    status: 'error',
-                    message: 'Failed to create fingerprint'
-                });
-            }
+            } 
+            fetch(`http://localhost:3000/api/users/${UID}`,{
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    finger: finger
+                })
+            })
+
+            //gửi mẫu vân tay
             this.pendingResponses.delete(UID);
         }
     }
 
-    handleCheck_In_Response(data) {//esp 32 thông báo checkin thành công
+    handleCheck_In_Response(data) {//nhận thông tin esp 32 thông báo checkin thành công tồi gửi lên server
         const {header,UID, Id_cong } = data;
         const res = this.pendingResponses.get(UID);
         
@@ -122,7 +129,7 @@ class WebSocketHandler {
                     timeZone: "Asia/Bangkok", year: "numeric",month: "2-digit",day: "2-digit",hour: "2-digit",minute: "2-digit",second: "2-digit",
                 });
                 
-                fetch('/api/history',{
+                fetch('http://localhost:3000/api/history',{
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -140,9 +147,40 @@ class WebSocketHandler {
         }
     }
 
-    handle_check_in_Request(data){
-        const {header,UID} = data;
-
+    handle_check_in_Request(data) {
+        const { UID } = data;
+    
+        fetch(`http://localhost:3000/api/users/${UID}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(result => {
+            const { UID, finger } = result;
+            console.log('nhận được thông tin từ server');
+            const fingerArray = finger.split(',').map(num => parseInt(num.trim()));
+            const message = {
+                header: 'Check_in response',
+                payload: {
+                    UID: UID,
+                    finger: fingerArray
+                }
+            };
+            // Sử dụng this thay vì wsHandler vì đang ở trong class
+            this.setPendingResponse(UID, null); // Cần xác định res phù hợp hoặc xử lý khác
+            this.sendToESP32(message);
+            console.log("Gửi yêu cầu check-in tới ESP32");
+        })
+        .catch(error => {
+            console.error('Error:', error.message);
+        });
     }
     
     sendToESP32(message, targetId = null) {//gửi tin nhắn tới 1 esp32 nhất định
