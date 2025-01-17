@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
 const cors = require('cors');
-const fs = require('fs'); // Để quản lý file password.json
+// const fs = require('fs'); // Để quản lý file password.json
 const connectDB = require('./utils/db');
 
 // Import Routes
@@ -29,47 +29,32 @@ app.use('/api/devices', deviceRoutes);
 app.use('/api/history', historyRoutes);
 app.use('/api/admin', adminRoutes);
 
-// Endpoint: Tạo hoặc thay đổi mật khẩu mở khóa
-app.post('/api/password', (req, res) => {
-  const { password } = req.body;
 
-  if (!password || typeof password !== 'string') {
-    return res.status(400).json({
-      success: false,
-      message: 'Password is required and must be a string.',
-    });
-  }
+app.post('/api/thongbao_user_moi', (req, res) => {
+    try {
+        const { id_port, header, UID } = req.body;
 
-  // Lưu mật khẩu vào file password.json
-  const passwordData = { password };
+        // Kiểm tra đầu vào
+        if (!id_port || !header || !UID) {
+            return res.status(400).json({
+                success: false,
+                message: 'id_port, header, and UID are required'
+            });
+        }
 
-  fs.writeFile('./password.json', JSON.stringify(passwordData, null, 2), (err) => {
-    if (err) {
-      console.error('Error writing password file:', err);
-      return res.status(500).json({
-        success: false,
-        message: 'Failed to save password.',
-      });
+        wsHandler.sendToESP32({ header, UID }, id_port);
+        console.log(`Đã gửi thông báo tới thiết bị có ID: ${id_port}`);
+    } catch (error) {
+        console.error('Error sending notification:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to send notification'
+        });
     }
-
-    return res.status(200).json({
-      success: true,
-      message: 'Password updated successfully.',
-    });
-  });
 });
 
-// Endpoint: Đọc mật khẩu mở khóa
-app.get('/api/password', (req, res) => {
-  fs.readFile('./password.json', 'utf8', (err, data) => {
-    if (err) {
-      console.error('Error reading password file:', err);
-      return res.status(500).json({
-        success: false,
-        message: 'Failed to read password.',
-      });
-    }
 
+<<<<<<< HEAD
     const passwordData = JSON.parse(data);
     return res.status(200).json({
       success: true,
@@ -84,6 +69,8 @@ app.post('/api/thongbao_user_moi', (req, res) => {
   wsHandler.broadcast(JSON.stringify({header,UID,password}));
 });
 
+=======
+>>>>>>> fadfb75ba333d5bf865b9580290eaaa2b821e767
 
 // Server listener
 const PORT = process.env.PORT || 3000;

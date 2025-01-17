@@ -5,7 +5,7 @@ const User = require('../models/User');
 // Hàm saveHistory để lưu lịch sử
 exports.saveHistory = async (req, res) => {
   try {
-    const { header, UID, id_port } = req.body;
+    const { header,UID,time,id_port,status } = req.body;
 
     // Kiểm tra dữ liệu đầu vào
     if (!header || !UID || !id_port) {
@@ -14,11 +14,6 @@ exports.saveHistory = async (req, res) => {
         message: 'Missing required fields: header, UID, or id_port.',
       });
     }
-
-    // Xác định trạng thái (status) dựa trên header
-    const status = header.includes('success') ? true : false;
-
-    // Tìm user dựa trên UID (lấy ObjectId từ UID)
     const user = await User.findOne({ UID });
 
     if (!user) {
@@ -29,15 +24,15 @@ exports.saveHistory = async (req, res) => {
     }
 
     // Lấy thời gian thực và định dạng thành chuỗi
-    const time_in = new Date().toISOString(); // ISO 8601 format (e.g., "2024-12-28T12:34:56.789Z")
+    //const time_in = new Date().toISOString(); // ISO 8601 format (e.g., "2024-12-28T12:34:56.789Z")
 
     // Tạo bản ghi lịch sử mới
     const history = new History({
-      id_port, // Thêm id_port
-      UID: user._id,
-      finger: user.finger || null,
-      time_in, // Lưu thời gian thực dạng chuỗi
-      status,
+      id_port:id_port, // Thêm id_port
+      UID: UID,
+      finger: String(user.finger)||null,
+      time_in: time, // Lưu thời gian thực dạng chuỗi
+      status: status
     });
 
     await history.save();

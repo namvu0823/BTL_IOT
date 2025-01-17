@@ -1,22 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import './UserManagement.css';
 
 const generateUID = () => Math.floor(Math.random() * 10000);
 
 function UserManagement() {
-    const [users, setUsers] = useState([
-        { id: 1, name: "Nguyen Van A", uid: generateUID(), email: "a@example.com", fingerprint: "✔️", dateUpdated: "15/04/2024" },
-        { id: 2, name: "Tran Thi B", uid: generateUID(), email: "b@example.com", fingerprint: "✔️", dateUpdated: "15/04/2024" },
-        { id: 3, name: "Nguyen Van C", uid: generateUID(), email: "c@example.com", fingerprint: "✔️", dateUpdated: "15/04/2024" },
-        { id: 4, name: "Tran Thi D", uid: generateUID(), email: "d@example.com", fingerprint: "✔️", dateUpdated: "15/04/2024" },
-        { id: 5, name: "Nguyen Van E", uid: generateUID(), email: "e@example.com", fingerprint: "✔️", dateUpdated: "15/04/2024" },
-        { id: 6, name: "Tran Thi F", uid: generateUID(), email: "f@example.com", fingerprint: "✔️", dateUpdated: "15/04/2024" },
-        { id: 7, name: "Nguyen Van G", uid: generateUID(), email: "g@example.com", fingerprint: "✔️", dateUpdated: "15/04/2024" },
-        { id: 8, name: "Tran Thi H", uid: generateUID(), email: "h@example.com", fingerprint: "✔️", dateUpdated: "15/04/2024" },
-        { id: 9, name: "Nguyen Van I", uid: generateUID(), email: "i@example.com", fingerprint: "✔️", dateUpdated: "15/04/2024" },
-    ]);
-
+    const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [newUserName, setNewUserName] = useState("");
     const [newUserEmail, setNewUserEmail] = useState("");
@@ -26,29 +16,57 @@ function UserManagement() {
     const [currentPage, setCurrentPage] = useState(1);
     const usersPerPage = 4;
 
-    const handleAddUser = () => {
-        if (newUserName.trim() === "" || newUserEmail.trim() === "") return;
-
-        const newUser = {
-            id: users.length + 1,
-            name: newUserName,
-            uid: generateUID(),
-            email: newUserEmail,
-            fingerprint: "✔️",
-            dateUpdated: new Date().toLocaleDateString(),
-            image: newUserImage,
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/api/users');
+                setUsers(response.data.data);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
         };
 
-        setUsers([...users, newUser]);
+        fetchUsers();
+    }, []);
+
+    const handleAddUser = async () => {
+        if (newUserName.trim() === "" || newUserEmail.trim() === "" || newUserUID.trim() === "") return;
+
+        const newUser = {
+            UID: newUserUID || generateUID(),
+            avatar: newUserImage,
+            name: newUserName,
+            email: newUserEmail,
+            finger: null,
+            registration_status: 'Pending',
+            date_create: new Date().toISOString(),
+            date_update: new Date().toISOString(),
+        };
+
+        try {
+            const response = await axios.post('http://localhost:3000/api/users', newUser);
+            setUsers([...users, response.data.data]);
+            resetForm();
+        } catch (error) {
+            console.error('Error adding user:', error);
+        }
+    };
+
+    const handleDeleteUser = async (UID) => {
+        try {
+            await axios.delete(`http://localhost:3000/api/users/${UID}`);
+            setUsers(users.filter(user => user.UID !== UID));
+        } catch (error) {
+            console.error('Error deleting user:', error);
+        }
+    };
+
+    const resetForm = () => {
         setNewUserName("");
         setNewUserEmail("");
         setNewUserUID("");
         setNewUserImage(null);
         setModalOpen(false);
-    };
-
-    const handleDeleteUser = (id) => {
-        setUsers(users.filter(user => user.id !== id));
     };
 
     const indexOfLastUser = currentPage * usersPerPage;
@@ -113,19 +131,21 @@ function UserManagement() {
                             <th>Name</th>
                             <th>UID</th>
                             <th>Email</th>
+                            <th>Date Create</th>
                             <th>Date Updated</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {currentUsers.map(user => (
-                            <tr key={user.id}>
+                            <tr key={user.UID}>
                                 <td>{user.name}</td>
-                                <td>{user.uid}</td>
+                                <td>{user.UID}</td>
                                 <td>{user.email}</td>
-                                <td>{user.dateUpdated}</td>
+                                <td>{user.date_create}</td>
+                                <td>{user.date_update}</td>
                                 <td>
-                                    <button className="delete-button" onClick={() => handleDeleteUser(user.id)}>Xóa</button>
+                                    <button className="delete-button" onClick={() => handleDeleteUser(user.UID)}>Xóa</button>
                                 </td>
                             </tr>
                         ))}

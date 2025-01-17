@@ -1,25 +1,37 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
-import "./Login.css"; // Tạo tệp CSS nếu cần
+import { useNavigate } from "react-router-dom"; 
+import "./Login.css"; 
 
-function Login({ onLogin }) {
+function Login({ onLogin, savedPassword, isPasswordChanged }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); // Khởi tạo useNavigate
+  const [showPassword, setShowPassword] = useState(false); 
+  const navigate = useNavigate(); 
 
   const handleLogin = () => {
-    // Kiểm tra tên đăng nhập và mật khẩu
-    if (username === "admin" && password === "password") {
-      onLogin(); // Gọi hàm khi đăng nhập thành công
-      navigate("/"); // Chuyển hướng về trang chính
+    console.log("Tên đăng nhập:", username);
+    console.log("Mật khẩu nhập:", password);
+    console.log("Mật khẩu đã lưu:", savedPassword);
+    console.log("Mật khẩu đã thay đổi:", isPasswordChanged);
+
+    if (username === "admin") {
+        if (isPasswordChanged && password === savedPassword) {
+            onLogin();
+            navigate("/"); // Chuyển hướng về trang chính
+        } else if (!isPasswordChanged && password === "password") {
+            onLogin();
+            navigate("/"); // Chuyển hướng về trang chính
+        } else {
+            alert("Mật khẩu không chính xác!");
+        }
     } else {
-      alert("Đăng nhập không thành công!");
+        alert("Tên đăng nhập không chính xác!");
     }
-  };
+};
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
-      handleLogin(); // Gọi hàm đăng nhập khi nhấn Enter
+      handleLogin(); 
     }
   };
 
@@ -35,13 +47,22 @@ function Login({ onLogin }) {
                   onKeyPress={handleKeyPress}
               />
               <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Mật khẩu"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onKeyPress={handleKeyPress}
               />
-              <button className='login_button'onClick={handleLogin}>Đăng Nhập</button>
+              <div className='check-box-container'>
+                  <input 
+                      className='check-box'
+                      type="checkbox"
+                      checked={showPassword}
+                      onChange={() => setShowPassword(!showPassword)} 
+                  />
+                  <label className='label-check-box'>Hiện mật khẩu</label>
+              </div>
+              <button className='login_button' onClick={handleLogin}>Đăng Nhập</button>
           </div>
       </div>
   );
